@@ -1,0 +1,8 @@
+name: SquadGoalsSMP
+main: me.block2block.squadgoalssmp
+version: 1.0-ALPHA
+commands:
+  balance:
+    description: Check your balance.
+  supersecretadmincommand:
+    description: Initiate a purge.
