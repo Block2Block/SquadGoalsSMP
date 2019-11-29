@@ -2,18 +2,15 @@ package me.block2block.squadgoalssmp.listeners;
 
 import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
-import me.block2block.squadgoalssmp.entities.EconomyItem;
 import me.block2block.squadgoalssmp.entities.EconomySign;
 import me.block2block.squadgoalssmp.entities.Transaction;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.BlockInventoryHolder;
 import org.bukkit.inventory.Inventory;
 
 public class SignClickListener implements Listener {

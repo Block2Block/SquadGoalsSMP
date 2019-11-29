@@ -2,13 +2,10 @@ package me.block2block.squadgoalssmp.listeners;
 
 import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
-import me.block2block.squadgoalssmp.utils.NameFetcher;
 import me.block2block.squadgoalssmp.utils.UUIDFetcher;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.bukkit.Bukkit;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;

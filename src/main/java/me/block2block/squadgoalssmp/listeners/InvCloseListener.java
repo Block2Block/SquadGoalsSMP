@@ -1,6 +1,5 @@
 package me.block2block.squadgoalssmp.listeners;
 
-import com.sun.org.apache.xpath.internal.operations.String;
 import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.EconomyItem;
