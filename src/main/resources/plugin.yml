@@ -1,8 +1,20 @@
 name: SquadGoalsSMP
-main: me.block2block.squadgoalssmp
+author: Block2Block
+main: me.block2block.squadgoalssmp.Main
 version: 1.0-ALPHA
+api-version: 1.14
 commands:
   balance:
+    aliases: [bal,money,moneyz,howmuchdoihaveinthebank,howrichami,howpoorami,howbrokeami,hownotbrokeami,howmuchmoneydoihavetowaste]
     description: Check your balance.
+    usage: /balance
   supersecretadmincommand:
-    description: Initiate a purge.
+    description: Information will be out soonTM!
+    usage: Don't use it.
+  pay:
+    aliases: [charity,donate,giveoutmoneyz,idontwantthismoneyanymore,sharethewealth,ineedtohidethismoneyfromtheirs,ineedtohidethismoneyfromhmrc,takemyprecioushardearnedmoney,moneyodisapearo]
+    description: Pay a user money.
+    usage: /pay [user] [amount]
+  updateecon:
+    description: Updates Economy Values.
+    usage: /updateecon
