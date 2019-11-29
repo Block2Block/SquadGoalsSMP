@@ -5,6 +5,7 @@ import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.EconomySign;
 import me.block2block.squadgoalssmp.entities.Transaction;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,9 @@ public class SignClickListener implements Listener {
             if (e.getClickedBlock().getType().name().toLowerCase().contains("sign")) {
                 Sign sign = (Sign) e.getClickedBlock().getState();
                 if (CacheManager.getSigns().containsKey(sign.getLocation())) {
+                    if (e.getPlayer().getGameMode() == GameMode.CREATIVE && e.getAction() == Action.LEFT_CLICK_BLOCK) {
+                        return;
+                    }
                     EconomySign economySign = CacheManager.getSigns().get(sign.getLocation());
                     Player p = e.getPlayer();
                     switch (economySign.getType()) {

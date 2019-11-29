@@ -11,6 +11,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.UUID;
+
 public class PlayerJoinListener implements Listener {
 
     @EventHandler

@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import sun.awt.geom.AreaOp;
 
 import java.util.Map;
 
@@ -52,6 +53,8 @@ public class ChatListener implements Listener {
                         e.getPlayer().sendMessage(Main.c("Economy","There was no space left in your inventory for all of the items, so the remaining were placed on the ground."));
                     }
                 }
+
+                CacheManager.transactionComplete(e.getPlayer().getUniqueId());
 
             }
         }

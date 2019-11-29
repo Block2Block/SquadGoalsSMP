@@ -32,6 +32,17 @@ public class InvCloseListener implements Listener {
             StringBuilder message = new StringBuilder();
             message.append("Items sold:\n");
             for (ItemStack is : e.getInventory().getStorageContents()) {
+                if (is == null) {
+                    continue;
+                }
+
+                if (is.getType() == null) {
+                    continue;
+                }
+
+                if (CacheManager.getItems() == null) {
+                    return;
+                }
                 if (CacheManager.getItems().containsKey(is.getType())) {
                     int amount = is.getAmount();
                     EconomyItem ic = CacheManager.getItems().get(is.getType());

@@ -43,6 +43,8 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        i = this;
+
         //Generating/Loading Config File
         if (!getDataFolder().exists()) getDataFolder().mkdir();
 
@@ -63,16 +65,15 @@ public class Main extends JavaPlugin {
         Map<Material, EconomyItem> items = new HashMap<>();
         for (String s : config.getKeys(false)) {
             Material material = Material.matchMaterial(s);
-            getLogger().info(s + " is not a valid material, values were skipped.");
             if (material != null) {
                 EconomyItem ei = new EconomyItem(material);
                 items.put(material, ei);
+            } else {
+                getLogger().info(s + " is not a valid material, values were skipped.");
             }
         }
 
         CacheManager.setItems(items);
-
-        i = this;
 
         Bukkit.setWhitelist(false);
 

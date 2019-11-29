@@ -31,7 +31,7 @@ public class SignPlaceListener implements Listener {
                     new BukkitRunnable(){
                         @Override
                         public void run() {
-                            Main.getDbManager().addSign(e.getBlock().getLocation(), 2, material);
+                            Main.getDbManager().addSign(e.getBlock().getLocation(), 2, null);
                         }
                     }.runTaskAsynchronously(Main.getInstance());
                 } else {

@@ -39,7 +39,7 @@ public class PlayerProfile {
 
     public void addBalance(long amount) {
         balance += amount;
-        player.sendMessage(Main.c("Money","&d$" + amount + " Squad Bucks&r has been added to your account."));
+        player.sendMessage(Main.c("Money","&d" + amount + " Squad Bucks&r has been added to your account."));
         new BukkitRunnable() {
             @Override
             public void run() {

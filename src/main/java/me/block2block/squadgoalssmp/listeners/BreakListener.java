@@ -30,6 +30,15 @@ public class BreakListener implements Listener {
                 e.setCancelled(true);
                 e.getPlayer().sendMessage(Main.c("Purge","You cannot break obsidian during a purge."));
             }
+        } else if (e.getBlock().getType().name().toLowerCase().contains("sign")) {
+            if (CacheManager.getSigns().containsKey(e.getBlock().getLocation())) {
+                if (e.getPlayer().isOp()) {
+                    CacheManager.getSigns().remove(e.getBlock().getLocation());
+                    Main.getDbManager().removeSign(e.getBlock().getLocation());
+                } else {
+                    e.setCancelled(true);
+                }
+            }
         }
     }
 

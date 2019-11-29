@@ -1,6 +1,7 @@
 package me.block2block.squadgoalssmp.database;
 
 import me.block2block.squadgoalssmp.CacheManager;
+import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.EconomyItem;
 import me.block2block.squadgoalssmp.entities.EconomySign;
 import me.block2block.squadgoalssmp.entities.Purge;
@@ -9,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
+import javax.annotation.Nullable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,7 +55,7 @@ public class DatabaseManager {
             statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS beacons ( `world` TEXT NOT NULL, `x` INTEGER NOT NULL, `y` INTEGER NOT NULL, `z` INTEGER NOT NULL)");
             set = statement.execute();
 
-            statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS signs ( `world` TEXT NOT NULL, `x` INTEGER NOT NULL, `y` INTEGER NOT NULL, `z` INTEGER NOT NULL, `type` INTEGER NOT NULL, `material` TEXT NOT NULL, `amount` INTEGER NOT NULL)");
+            statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS signs ( `world` TEXT NOT NULL, `x` INTEGER NOT NULL, `y` INTEGER NOT NULL, `z` INTEGER NOT NULL, `type` INTEGER NOT NULL, `material` TEXT NOT NULL)");
             set = statement.execute();
 
             return true;
@@ -161,7 +163,8 @@ public class DatabaseManager {
 
             List<UUID> whitelist = new ArrayList<>();
             while (set.next()) {
-                whitelist.add(UUID.fromString(set.getString(1)));
+                UUID uuid = UUID.fromString(set.getString(1));
+                whitelist.add(uuid);
             }
             CacheManager.setWhitelist(whitelist);
         } catch (SQLException e) {
@@ -214,10 +217,15 @@ public class DatabaseManager {
         }
     }
 
-    public void addSign(Location l, int type, Material material) {
+    public void addSign(Location l, int type, @Nullable Material material) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO signs(world, x, y, z, type, material) VALUES ('" + l.getWorld().getName() + "'," + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + ", " + type + ",'" + material.name() + "')");
-            boolean set = statement.execute();
+            if (material == null) {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO signs(world, x, y, z, type, material) VALUES ('" + l.getWorld().getName() + "'," + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + ", " + type + ",'AIR')");
+                boolean set = statement.execute();
+            } else {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO signs(world, x, y, z, type, material) VALUES ('" + l.getWorld().getName() + "'," + l.getBlockX() + "," + l.getBlockY() + "," + l.getBlockZ() + ", " + type + ",'" + material.name() + "')");
+                boolean set = statement.execute();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -237,7 +245,6 @@ public class DatabaseManager {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM `signs`");
             ResultSet set = statement.executeQuery();
 
-            List<UUID> whitelist = new ArrayList<>();
             while (set.next()) {
                 Location l = new Location(Bukkit.getWorld(set.getString(1)),set.getInt(2),set.getInt(3),set.getInt(4));
                 Material material = Material.matchMaterial(set.getString(6));
@@ -246,7 +253,6 @@ public class DatabaseManager {
 
                 CacheManager.addSign(is, l);
             }
-            CacheManager.setWhitelist(whitelist);
         } catch (SQLException e) {
             e.printStackTrace();
             return;
