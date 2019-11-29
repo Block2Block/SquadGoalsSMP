@@ -72,15 +72,15 @@ public class CacheManager {
         beacons.remove(l);
     }
 
-    public static void setSigns(Map<Location, EconomySign> sign) {
-        signs = sign;
-    }
 
     public static Map<Location, EconomySign> getSigns() {
         return signs;
     }
 
     public static void addSign(EconomySign sign, Location l) {
+        if (signs == null) {
+            signs = new HashMap<>();
+        }
         signs.put(l, sign);
     }
 
@@ -102,5 +102,9 @@ public class CacheManager {
 
     public static Transaction getTransaction(UUID uuid) {
         return transactions.getOrDefault(uuid, null);
+    }
+
+    public static void transactionComplete(UUID uuid) {
+        transactions.remove(uuid);
     }
 }
