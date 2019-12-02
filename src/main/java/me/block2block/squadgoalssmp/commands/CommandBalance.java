@@ -15,7 +15,7 @@ public class CommandBalance implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            p.sendMessage(Main.c("Economy","Balance: &d" + CacheManager.getProfile(p.getUniqueId()).getBalance() + " Squad Bucks&r."));
+            p.sendMessage(Main.c("Economy", "Balance: &d" + CacheManager.getProfile(p.getUniqueId()).getBalance() + " Squad Bucks&r."));
         }
         return true;
     }

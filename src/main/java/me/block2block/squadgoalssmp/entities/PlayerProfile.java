@@ -10,13 +10,13 @@ public class PlayerProfile {
     private Player player;
 
     public PlayerProfile(Player p) {
-        p.sendMessage(Main.c("Stats Manager","Loading profile..."));
+        p.sendMessage(Main.c("Stats Manager", "Loading profile..."));
         player = p;
         new BukkitRunnable() {
             @Override
             public void run() {
                 balance = Main.getDbManager().getBalance(p.getUniqueId());
-                p.sendMessage(Main.c("Stats Manager","Profile successfully loaded."));
+                p.sendMessage(Main.c("Stats Manager", "Profile successfully loaded."));
             }
         }.runTaskAsynchronously(Main.getInstance());
 
@@ -28,7 +28,7 @@ public class PlayerProfile {
 
     public void removeBalance(long amount) {
         balance -= amount;
-        player.sendMessage(Main.c("Money","&d" + amount + " Squad Bucks&r has been removed from your account."));
+        player.sendMessage(Main.c("Money", "&d" + amount + " Squad Bucks&r has been removed from your account."));
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -39,7 +39,7 @@ public class PlayerProfile {
 
     public void addBalance(long amount) {
         balance += amount;
-        player.sendMessage(Main.c("Money","&d" + amount + " Squad Bucks&r has been added to your account."));
+        player.sendMessage(Main.c("Money", "&d" + amount + " Squad Bucks&r has been added to your account."));
         new BukkitRunnable() {
             @Override
             public void run() {

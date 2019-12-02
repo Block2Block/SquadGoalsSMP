@@ -23,13 +23,18 @@ public class DrinkPotionEvent implements Listener {
                 if (purge.getPm().getPotionBlacklist() != null) {
                     if (purge.getPm().getPotionBlacklist().contains(pm.getBasePotionData().getType().getEffectType())) {
                         e.setCancelled(true);
-                        e.getPlayer().sendMessage(Main.c("Purge","That potion effect is disabled during this purge."));
+                        e.getPlayer().sendMessage(Main.c("Purge", "That potion effect is disabled during this purge."));
                     }
                 } else if (purge.getPm().getPotionWhitelist() != null) {
                     if (!purge.getPm().getPotionWhitelist().contains(pm.getBasePotionData().getType().getEffectType())) {
                         e.setCancelled(true);
-                        e.getPlayer().sendMessage(Main.c("Purge","That potion effect is disabled during this purge."));
+                        e.getPlayer().sendMessage(Main.c("Purge", "That potion effect is disabled during this purge."));
                     }
+                }
+            } if (e.getItem().getType() == Material.GOLDEN_APPLE) {
+                if (!CacheManager.getPurge().getPm().areGapplesEnabled()) {
+                    e.setCancelled(true);
+                    e.getPlayer().sendMessage(Main.c("Purge", "Golden apples are disabled during this purge."));
                 }
             }
         }

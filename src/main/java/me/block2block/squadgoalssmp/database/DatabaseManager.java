@@ -1,7 +1,6 @@
 package me.block2block.squadgoalssmp.database;
 
 import me.block2block.squadgoalssmp.CacheManager;
-import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.EconomyItem;
 import me.block2block.squadgoalssmp.entities.EconomySign;
 import me.block2block.squadgoalssmp.entities.Purge;
@@ -246,7 +245,7 @@ public class DatabaseManager {
             ResultSet set = statement.executeQuery();
 
             while (set.next()) {
-                Location l = new Location(Bukkit.getWorld(set.getString(1)),set.getInt(2),set.getInt(3),set.getInt(4));
+                Location l = new Location(Bukkit.getWorld(set.getString(1)), set.getInt(2), set.getInt(3), set.getInt(4));
                 Material material = Material.matchMaterial(set.getString(6));
                 EconomyItem ic = CacheManager.getItems().get(material);
                 EconomySign is = new EconomySign(l, ic, set.getInt(5));

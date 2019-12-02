@@ -27,10 +27,9 @@ public class UUIDFetcher {
      * @return The UUID of the given player
      */
     //Uncomment this if you want the helper method for Bukkit/Spigot:
-
-	public static UUID getUUID(Player player) {
-		return getUUID(player.getName());
-	}
+    public static UUID getUUID(Player player) {
+        return getUUID(player.getName());
+    }
 
 
     /**
@@ -49,9 +48,9 @@ public class UUIDFetcher {
 
         String uuid = "";
 
-        for(int i = 0; i <= 31; i++) {
+        for (int i = 0; i <= 31; i++) {
             uuid = uuid + u.charAt(i);
-            if(i == 7 || i == 11 || i == 15 || i == 19) {
+            if (i == 7 || i == 11 || i == 15 || i == 19) {
                 uuid = uuid + "-";
             }
         }
@@ -62,8 +61,8 @@ public class UUIDFetcher {
     private static void readData(String toRead, StringBuilder result) {
         int i = 7;
 
-        while(i < 200) {
-            if(!String.valueOf(toRead.charAt(i)).equalsIgnoreCase("\"")) {
+        while (i < 200) {
+            if (!String.valueOf(toRead.charAt(i)).equalsIgnoreCase("\"")) {
 
                 result.append(String.valueOf(toRead.charAt(i)));
 

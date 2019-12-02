@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import sun.awt.geom.AreaOp;
 
 import java.util.Map;
 
@@ -20,15 +19,15 @@ public class ChatListener implements Listener {
             if (e.getMessage().matches("[0-9]+")) {
                 int amount;
                 try {
-                     amount = Integer.parseInt(e.getMessage());
+                    amount = Integer.parseInt(e.getMessage());
                 } catch (NumberFormatException ex) {
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage(Main.c("Economy","You cannot buy that many items."));
+                    e.getPlayer().sendMessage(Main.c("Economy", "You cannot buy that many items."));
                     return;
                 }
 
                 if (amount < 1) {
-                    e.getPlayer().sendMessage(Main.c("Economy","You cannot buy less than 1 of an item."));
+                    e.getPlayer().sendMessage(Main.c("Economy", "You cannot buy less than 1 of an item."));
                     e.setCancelled(true);
                     return;
                 }
@@ -36,7 +35,7 @@ public class ChatListener implements Listener {
                 Transaction transaction = CacheManager.getTransaction(e.getPlayer().getUniqueId());
 
                 if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getBalance() < (transaction.getItem().getBuyPrice() * amount)) {
-                    e.getPlayer().sendMessage(Main.c("Economy","You have insufficient funds to buy" + amount + " " + transaction.getItem().getMaterialName() +  "s. You need at least &d" + (transaction.getItem().getBuyPrice() * amount) + " Squad Bucks&r."));
+                    e.getPlayer().sendMessage(Main.c("Economy", "You have insufficient funds to buy" + amount + " " + transaction.getItem().getMaterialName() + "s. You need at least &d" + (transaction.getItem().getBuyPrice() * amount) + " Squad Bucks&r."));
                     e.setCancelled(true);
                     return;
                 }
@@ -44,13 +43,13 @@ public class ChatListener implements Listener {
                 e.setCancelled(true);
 
                 CacheManager.getProfile(e.getPlayer().getUniqueId()).removeBalance(amount * transaction.getItem().getBuyPrice());
-                e.getPlayer().sendMessage(Main.c("Economy","You purchased &d" + amount + " " + transaction.getItem().getMaterialName() + "&r."));
+                e.getPlayer().sendMessage(Main.c("Economy", "You purchased &d" + amount + " " + transaction.getItem().getMaterialName() + "&r."));
                 Inventory inv = e.getPlayer().getInventory();
                 Map<Integer, ItemStack> result = inv.addItem(new ItemStack(transaction.getItem().getMaterial(), amount));
                 if (result.size() > 0) {
                     for (ItemStack is : result.values()) {
                         e.getPlayer().getWorld().dropItem(e.getPlayer().getLocation(), is);
-                        e.getPlayer().sendMessage(Main.c("Economy","There was no space left in your inventory for all of the items, so the remaining were placed on the ground."));
+                        e.getPlayer().sendMessage(Main.c("Economy", "There was no space left in your inventory for all of the items, so the remaining were placed on the ground."));
                     }
                 }
 

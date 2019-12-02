@@ -12,7 +12,7 @@ import static org.bukkit.Material.*;
 
 public enum PurgeMode {
 
-    NORMAL(1, "Normal", null,null, null, null, null, null, null, null, "This is a normal purge. All weapons, armor, enchantments and potions are enabled!", true),
+    NORMAL(1, "Normal", null, null, null, null, null, null, null, null, "This is a normal purge. All weapons, armor, enchantments and potions are enabled!", true),
     BASIC(2, "Basic", null, new ArrayList<>(Arrays.asList(WOODEN_SWORD, BOW)), null, new ArrayList<>(Arrays.asList(LEATHER_BOOTS, LEATHER_CHESTPLATE, LEATHER_LEGGINGS, LEATHER_HELMET)), new ArrayList<>(), null, new ArrayList<>(), null, "This is a basic purge, all armor (except leather), weapons (except wooden swords & bows), enchantments, potion effects and Gapples have been disabled!", false);
 
     private int id;
@@ -28,7 +28,7 @@ public enum PurgeMode {
     private List<Enchantment> enchantmentBlacklist;
     private boolean gapplesEnabled;
 
-    PurgeMode(int id, String name, List<Material> weaponBlacklist, List<Material> weaponWhitelist, List<Material> armorBlacklist, List<Material> armorWhitelist, List<PotionEffectType> potionWhitelist, List<PotionEffectType> potionBlacklist, List<Enchantment> enchantmentWhitelist,List<Enchantment> enchantmentBlacklist, String description, boolean gapplesEnabled) {
+    PurgeMode(int id, String name, List<Material> weaponBlacklist, List<Material> weaponWhitelist, List<Material> armorBlacklist, List<Material> armorWhitelist, List<PotionEffectType> potionWhitelist, List<PotionEffectType> potionBlacklist, List<Enchantment> enchantmentWhitelist, List<Enchantment> enchantmentBlacklist, String description, boolean gapplesEnabled) {
         this.id = id;
         this.name = name;
         this.weaponBlacklist = weaponBlacklist;
@@ -42,6 +42,15 @@ public enum PurgeMode {
 
         this.description = description;
         this.gapplesEnabled = gapplesEnabled;
+    }
+
+    public static PurgeMode getByID(int id) {
+        for (PurgeMode p : PurgeMode.values()) {
+            if (p.id == id) {
+                return p;
+            }
+        }
+        return null;
     }
 
     public String getName() {
@@ -90,14 +99,5 @@ public enum PurgeMode {
 
     public boolean areGapplesEnabled() {
         return gapplesEnabled;
-    }
-
-    public static PurgeMode getByID(int id) {
-        for (PurgeMode p : PurgeMode.values()) {
-            if (p.id == id) {
-                return p;
-            }
-        }
-        return null;
     }
 }
