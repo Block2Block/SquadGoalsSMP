@@ -11,8 +11,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.UUID;
-
 public class PlayerJoinListener implements Listener {
 
     @EventHandler
@@ -40,7 +38,7 @@ public class PlayerJoinListener implements Listener {
                 }
             }
 
-            p.sendMessage(Main.c("Purge","There is currently a purge active. " + CacheManager.getPurge().getPm().getDescription() + " Any illegal potion effects have been removed."));
+            p.sendMessage(Main.c("Purge", "There is currently a purge active. " + CacheManager.getPurge().getPm().getDescription() + " Any illegal potion effects have been removed."));
         }
 
         CacheManager.addProfile(e.getPlayer().getUniqueId(), new PlayerProfile(e.getPlayer()));
@@ -50,6 +48,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         CacheManager.removeProfile(e.getPlayer().getUniqueId());
+        CacheManager.transactionComplete(e.getPlayer().getUniqueId());
     }
 
 }

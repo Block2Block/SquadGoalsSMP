@@ -84,12 +84,12 @@ public class CacheManager {
         signs.put(l, sign);
     }
 
-    public static void setItems(Map<Material, EconomyItem> items) {
-        CacheManager.items = items;
-    }
-
     public static Map<Material, EconomyItem> getItems() {
         return items;
+    }
+
+    public static void setItems(Map<Material, EconomyItem> items) {
+        CacheManager.items = items;
     }
 
     public static boolean inTransaction(UUID uuid) {

@@ -21,7 +21,7 @@ public class DiscordMessageEvent extends ListenerAdapter {
                         if (e.getMessage().getContentStripped().split(" ").length == 2) {
                             String[] args = e.getMessage().getContentStripped().split(" ");
                             if (args[1].matches("[0-9A-Za-z_]{3,16}")) {
-                                new BukkitRunnable(){
+                                new BukkitRunnable() {
                                     @Override
                                     public void run() {
                                         UUID uuid = UUIDFetcher.getUUID(args[1]);

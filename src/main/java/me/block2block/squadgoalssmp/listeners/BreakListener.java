@@ -15,7 +15,7 @@ public class BreakListener implements Listener {
         if (e.getBlock().getType() == Material.BEACON) {
             if (CacheManager.isPurge()) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(Main.c("Purge","You cannot break beacons during a purge."));
+                e.getPlayer().sendMessage(Main.c("Purge", "You cannot break beacons during a purge."));
             } else {
                 new BukkitRunnable() {
                     @Override
@@ -28,7 +28,7 @@ public class BreakListener implements Listener {
         } else if (e.getBlock().getType() == Material.OBSIDIAN) {
             if (CacheManager.isPurge()) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(Main.c("Purge","You cannot break obsidian during a purge."));
+                e.getPlayer().sendMessage(Main.c("Purge", "You cannot break obsidian during a purge."));
             }
         } else if (e.getBlock().getType().name().toLowerCase().contains("sign")) {
             if (CacheManager.getSigns().containsKey(e.getBlock().getLocation())) {

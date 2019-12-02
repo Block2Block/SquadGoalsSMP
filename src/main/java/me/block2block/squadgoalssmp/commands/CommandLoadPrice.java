@@ -25,9 +25,9 @@ public class CommandLoadPrice implements CommandExecutor {
                 for (EconomySign sign : CacheManager.getSigns().values()) {
                     sign.update();
                 }
-                p.sendMessage(Main.c("Economy","All economy signs and prices have been updated."));
+                p.sendMessage(Main.c("Economy", "All economy signs and prices have been updated."));
             } else {
-                p.sendMessage(Main.c("Command Manager","You are not allowed to use this command."));
+                p.sendMessage(Main.c("Command Manager", "You are not allowed to use this command."));
             }
         }
         return true;

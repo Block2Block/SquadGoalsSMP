@@ -25,15 +25,15 @@ public class NameFetcher {
 
         int i = 0;
 
-        while(i < 200) {
+        while (i < 200) {
 
-            if((String.valueOf(output.charAt(i)).equalsIgnoreCase("n")) && (String.valueOf(output.charAt(i+1)).equalsIgnoreCase("a")) && (String.valueOf(output.charAt(i+2)).equalsIgnoreCase("m")) && (String.valueOf(output.charAt(i+3)).equalsIgnoreCase("e"))) {
+            if ((String.valueOf(output.charAt(i)).equalsIgnoreCase("n")) && (String.valueOf(output.charAt(i + 1)).equalsIgnoreCase("a")) && (String.valueOf(output.charAt(i + 2)).equalsIgnoreCase("m")) && (String.valueOf(output.charAt(i + 3)).equalsIgnoreCase("e"))) {
 
-                int k = i+7;
+                int k = i + 7;
 
-                while(k < 100) {
+                while (k < 100) {
 
-                    if(!String.valueOf(output.charAt(k)).equalsIgnoreCase("\"")) {
+                    if (!String.valueOf(output.charAt(k)).equalsIgnoreCase("\"")) {
 
                         result.append(String.valueOf(output.charAt(k)));
 

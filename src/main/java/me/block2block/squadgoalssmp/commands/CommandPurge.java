@@ -28,39 +28,39 @@ public class CommandPurge implements CommandExecutor {
                                         if (pm != null) {
                                             CacheManager.setPurge(new Purge(pm, -1));
                                         } else {
-                                            p.sendMessage(Main.c("Purge","That is not a valid purge id."));
+                                            p.sendMessage(Main.c("Purge", "That is not a valid purge id."));
                                         }
                                     } else {
-                                        p.sendMessage(Main.c("Purge","Invalid syntax. Correct syntax: /supersecretadmincommand start [purge id]"));
+                                        p.sendMessage(Main.c("Purge", "Invalid syntax. Correct syntax: /supersecretadmincommand start [purge id]"));
                                     }
                                 } else {
-                                    p.sendMessage(Main.c("Purge","There is already a purge active. Please end it in order to start a new one."));
+                                    p.sendMessage(Main.c("Purge", "There is already a purge active. Please end it in order to start a new one."));
                                 }
                             } else {
-                                p.sendMessage(Main.c("Purge","Invalid syntax. Correct syntax: /supersecretadmincommand start [purge id]"));
+                                p.sendMessage(Main.c("Purge", "Invalid syntax. Correct syntax: /supersecretadmincommand start [purge id]"));
                             }
                             break;
                         case "end":
                             if (CacheManager.isPurge()) {
                                 Purge purge = CacheManager.getPurge();
-                                p.sendMessage(Main.c("Purge","You ended the purge."));
+                                p.sendMessage(Main.c("Purge", "You ended the purge."));
                                 purge.end();
                             } else {
-                                p.sendMessage(Main.c("Purge","There is no purge currently in progress."));
+                                p.sendMessage(Main.c("Purge", "There is no purge currently in progress."));
                             }
                             break;
                         default:
-                            p.sendMessage(Main.c("Purge","Available Sub-commands:\n" +
+                            p.sendMessage(Main.c("Purge", "Available Sub-commands:\n" +
                                     "&d/supersecretadmincommand start [purge id]&r - Start a purge with the specified id.\n" +
                                     "&d/supersecretadmincommand end&r - End a purge in progress."));
                     }
                 } else {
-                    p.sendMessage(Main.c("Purge","Available Sub-commands:\n" +
+                    p.sendMessage(Main.c("Purge", "Available Sub-commands:\n" +
                             "&d/supersecretadmincommand start [purge id]&r - Start a purge with the specified id.\n" +
                             "&d/supersecretadmincommand end&r - End a purge in progress."));
                 }
             } else {
-                p.sendMessage(Main.c("Command Manager","You do not have permission to execute this command."));
+                p.sendMessage(Main.c("Command Manager", "You do not have permission to execute this command."));
             }
         }
         return true;

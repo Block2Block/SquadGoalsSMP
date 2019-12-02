@@ -15,7 +15,7 @@ public class PlaceListener implements Listener {
         if (e.getBlock().getType() == Material.BEACON) {
             if (CacheManager.isPurge()) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(Main.c("Purge","You cannot place beacons during a purge."));
+                e.getPlayer().sendMessage(Main.c("Purge", "You cannot place beacons during a purge."));
             } else {
                 new BukkitRunnable() {
                     @Override

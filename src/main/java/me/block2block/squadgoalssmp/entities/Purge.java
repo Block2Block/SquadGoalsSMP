@@ -28,7 +28,7 @@ public class Purge {
                 public void run() {
                     end();
                 }
-            }.runTaskLater(Main.getInstance(), (endTime - System.currentTimeMillis())/50);
+            }.runTaskLater(Main.getInstance(), (endTime - System.currentTimeMillis()) / 50);
         } else {
             if (end == -2) {
                 end();
@@ -39,11 +39,11 @@ public class Purge {
             ScoreboardManager sm = Bukkit.getScoreboardManager();
             assert sm != null;
             scoreboard = sm.getMainScoreboard();
-            Objective objective = scoreboard.registerNewObjective("purge_kills","playerKillCount", Main.c(null, "&d&lPurge Kills"));
+            Objective objective = scoreboard.registerNewObjective("purge_kills", "playerKillCount", Main.c(null, "&d&lPurge Kills"));
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-            for (Player p : Bukkit.getOnlinePlayers() ) {
-                p.sendMessage(Main.c("Purge","A purge has just begun! " + pm.getDescription() + " All illegal potion effects have been removed."));
-                p.sendTitle(Main.c(null, "&d&lPURGE"),Main.c(null, "A purge has just begun!"), 20, 100, 20);
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.sendMessage(Main.c("Purge", "A purge has just begun! " + pm.getDescription() + " All illegal potion effects have been removed."));
+                p.sendTitle(Main.c(null, "&d&lPURGE"), Main.c(null, "A purge has just begun!"), 20, 100, 20);
                 p.setScoreboard(scoreboard);
                 p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 100, 1);
 
@@ -110,9 +110,9 @@ public class Purge {
             l.getBlock().setType(Material.AIR);
         }
 
-        for (Player p : Bukkit.getOnlinePlayers() ) {
-            p.sendMessage(Main.c("Purge","The purge has ended! All weapons, armor, enchantments and potion effects are now enabled! Rewards will be given shortly."));
-            p.sendTitle(Main.c(null, "&d&lPURGE"),Main.c(null, "The purge has ended!"), 20, 100, 20);
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.sendMessage(Main.c("Purge", "The purge has ended! All weapons, armor, enchantments and potion effects are now enabled! Rewards will be given shortly."));
+            p.sendTitle(Main.c(null, "&d&lPURGE"), Main.c(null, "The purge has ended!"), 20, 100, 20);
             p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, 100, 1);
         }
 

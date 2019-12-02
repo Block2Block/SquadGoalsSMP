@@ -51,11 +51,11 @@ public class InvCloseListener implements Listener {
                     message.append("&d" + ic.getMaterialName() + "&r - &d" + amount + "&r * &d" + ic.getSellPrice() + " Squad Bucks&r.\n");
                 } else {
                     Inventory playerInventory = p.getInventory();
-                    p.sendMessage(Main.c("Economy","An item you put into the inventory is not sellable."));
+                    p.sendMessage(Main.c("Economy", "An item you put into the inventory is not sellable."));
                     int empty = playerInventory.firstEmpty();
                     if (empty == -1) {
                         p.getWorld().dropItem(p.getLocation(), is);
-                        p.sendMessage(Main.c("Economy","There was no space in your inventory, so it was placed on the ground."));
+                        p.sendMessage(Main.c("Economy", "There was no space in your inventory, so it was placed on the ground."));
                     } else {
                         playerInventory.setItem(empty, is);
                     }
@@ -63,7 +63,7 @@ public class InvCloseListener implements Listener {
                 }
             }
             message.append("Total Items: &d" + totalItems + "&r - Total Value: &d" + total + " Squad Bucks&r.");
-            p.sendMessage(Main.c("Economy",message.toString()));
+            p.sendMessage(Main.c("Economy", message.toString()));
             CacheManager.getProfile(p.getUniqueId()).addBalance(total);
         }
     }

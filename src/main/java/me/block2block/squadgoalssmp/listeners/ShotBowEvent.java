@@ -23,13 +23,13 @@ public class ShotBowEvent implements Listener {
                 if (purge.getPm().getWeaponWhitelist() != null) {
                     if (!purge.getPm().getWeaponWhitelist().contains(Material.BOW)) {
                         e.setCancelled(true);
-                        p.sendMessage(Main.c("Purge","Bows are disabled during this purge."));
+                        p.sendMessage(Main.c("Purge", "Bows are disabled during this purge."));
                         return;
                     }
                 } else if (purge.getPm().getWeaponBlacklist() != null) {
                     if (purge.getPm().getWeaponBlacklist().contains(Material.BOW)) {
                         e.setCancelled(true);
-                        p.sendMessage(Main.c("Purge","Bows are disabled during this purge."));
+                        p.sendMessage(Main.c("Purge", "Bows are disabled during this purge."));
                         return;
                     }
                 }
@@ -41,7 +41,7 @@ public class ShotBowEvent implements Listener {
                     for (Enchantment en : i.getEnchantments().keySet()) {
                         if (purge.getPm().getEnchantmentBlacklist().contains(en)) {
                             e.setCancelled(true);
-                            p.sendMessage(Main.c("Purge","Your bow has an enchantment that has been disabled."));
+                            p.sendMessage(Main.c("Purge", "Your bow has an enchantment that has been disabled."));
                             return;
                         }
                     }
@@ -52,7 +52,7 @@ public class ShotBowEvent implements Listener {
                     for (Enchantment en : i.getEnchantments().keySet()) {
                         if (!purge.getPm().getEnchantmentWhitelist().contains(en)) {
                             e.setCancelled(true);
-                            p.sendMessage(Main.c("Purge","Your bow has an enchantment that has been disabled."));
+                            p.sendMessage(Main.c("Purge", "Your bow has an enchantment that has been disabled."));
                             return;
                         }
                     }

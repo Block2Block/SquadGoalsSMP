@@ -54,7 +54,7 @@ public class DamageListener implements Listener {
                         if (attacker.getInventory().getItemInMainHand().getItemMeta() != null) {
                             if (attacker.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
                                 e.setCancelled(true);
-                                player.sendMessage(Main.c("Purge","Your weapon has an Emerald Enchantment, which are disabled during purges!"));
+                                player.sendMessage(Main.c("Purge", "Your weapon has an Emerald Enchantment, which are disabled during purges!"));
                                 return;
                             }
                         }
@@ -90,10 +90,10 @@ public class DamageListener implements Listener {
                         if (i == null) {
                             continue;
                         }
-                        if (i.getItemMeta() != null){
+                        if (i.getItemMeta() != null) {
                             if (i.getItemMeta().hasLore()) {
                                 e.setDamage(e.getDamage());
-                                player.sendMessage(Main.c("Purge","Your armor is illegal! You will take FULL DAMAGE and your armor will decrease normally in durability until you put on valid armor!"));
+                                player.sendMessage(Main.c("Purge", "Your armor is illegal! You will take FULL DAMAGE and your armor will decrease normally in durability until you put on valid armor!"));
                                 return;
                             }
                         }
@@ -101,12 +101,12 @@ public class DamageListener implements Listener {
                             if (purge.getPm().getEnchantmentBlacklist() != null) {
                                 if (purge.getPm().getEnchantmentBlacklist().contains(en)) {
                                     e.setDamage(e.getDamage());
-                                    player.sendMessage(Main.c("Purge","Your armor is illegal! You will take FULL DAMAGE and your armor will decrease normally in durability until you put on valid armor!"));
+                                    player.sendMessage(Main.c("Purge", "Your armor is illegal! You will take FULL DAMAGE and your armor will decrease normally in durability until you put on valid armor!"));
                                 }
                             } else if (purge.getPm().getEnchantmentWhitelist() != null) {
                                 if (!purge.getPm().getEnchantmentWhitelist().contains(en)) {
                                     e.setDamage(e.getDamage());
-                                    player.sendMessage(Main.c("Purge","Your armor is illegal! You will take FULL DAMAGE and your armor will decrease normally in durability until you put on valid armor!"));
+                                    player.sendMessage(Main.c("Purge", "Your armor is illegal! You will take FULL DAMAGE and your armor will decrease normally in durability until you put on valid armor!"));
                                 }
                             }
                         }
@@ -116,12 +116,12 @@ public class DamageListener implements Listener {
                     if (purge.getPm().getEnchantmentWhitelist() != null) {
                         if (!purge.getPm().getEnchantmentWhitelist().contains(Enchantment.THORNS)) {
                             e.setCancelled(true);
-                            attacker.sendMessage(Main.c("Purge","Your armor has the Thorns enchantment, which is disabled during this purge. The Purge enchantment will not work until the purge is over."));
+                            attacker.sendMessage(Main.c("Purge", "Your armor has the Thorns enchantment, which is disabled during this purge. The Purge enchantment will not work until the purge is over."));
                         }
                     } else if (purge.getPm().getEnchantmentBlacklist() != null) {
                         if (purge.getPm().getEnchantmentBlacklist().contains(Enchantment.THORNS)) {
                             e.setCancelled(true);
-                            attacker.sendMessage(Main.c("Purge","Your armor has the Thorns enchantment, which is disabled during this purge. The Purge enchantment will not work until the purge is over."));
+                            attacker.sendMessage(Main.c("Purge", "Your armor has the Thorns enchantment, which is disabled during this purge. The Purge enchantment will not work until the purge is over."));
                         }
                     }
                 }

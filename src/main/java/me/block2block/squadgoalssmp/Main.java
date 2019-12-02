@@ -40,6 +40,18 @@ public class Main extends JavaPlugin {
     private static File configFile;
     private static FileConfiguration config;
 
+    public static String c(String prefix, String message) {
+        return ChatColor.translateAlternateColorCodes('&', ((prefix == null) ? "&r" : "&5" + prefix + ">> &r") + message);
+    }
+
+    public static DatabaseManager getDbManager() {
+        return dbManager;
+    }
+
+    public static Main getInstance() {
+        return i;
+    }
+
     @Override
     public void onEnable() {
 
@@ -122,20 +134,8 @@ public class Main extends JavaPlugin {
         dbManager.close();
     }
 
-    public static String c(String prefix, String message) {
-        return ChatColor.translateAlternateColorCodes('&', ((prefix==null)?"&r":"&5"+prefix+">> &r") + message);
-    }
-
     private void registerListeners(Listener... listeners) {
         Arrays.stream(listeners).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
-    }
-
-    public static DatabaseManager getDbManager() {
-        return dbManager;
-    }
-
-    public static Main getInstance() {
-        return i;
     }
 
     private void copy(InputStream in, File file) {
@@ -143,8 +143,8 @@ public class Main extends JavaPlugin {
             OutputStream out = new FileOutputStream(file);
             byte[] buf = new byte[1024];
             int len;
-            while((len=in.read(buf))>0){
-                out.write(buf,0,len);
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
             }
             out.close();
             in.close();
