@@ -4,12 +4,16 @@ import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.EconomyItem;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class InvCloseListener implements Listener {
 
@@ -29,6 +33,7 @@ public class InvCloseListener implements Listener {
 
             long total = 0;
             long totalItems = 0;
+            Map<Material, Integer> items = new HashMap<>();
             StringBuilder message = new StringBuilder();
             message.append("Items sold:\n");
             for (ItemStack is : e.getInventory().getStorageContents()) {
@@ -48,7 +53,11 @@ public class InvCloseListener implements Listener {
                     EconomyItem ic = CacheManager.getItems().get(is.getType());
                     total += (ic.getSellPrice() * amount);
                     totalItems += amount;
-                    message.append("&d" + ic.getMaterialName() + "&r - &d" + amount + "&r * &d" + ic.getSellPrice() + " Squad Bucks&r.\n");
+                    if (items.containsKey(is.getType())) {
+                        items.replace(is.getType(), items.get(is.getType()) + amount);
+                    } else {
+                        items.put(is.getType(), amount);
+                    }
                 } else {
                     Inventory playerInventory = p.getInventory();
                     p.sendMessage(Main.c("Economy", "An item you put into the inventory is not sellable."));
@@ -61,6 +70,14 @@ public class InvCloseListener implements Listener {
                     }
 
                 }
+            }
+            if (totalItems == 0) {
+                return;
+            }
+
+            for (Material m : items.keySet()) {
+                EconomyItem ic = CacheManager.getItems().get(m);
+                message.append("&d" + ic.getMaterialName() + "&r - &d" + items.get(m) + "&r * &d" + ic.getSellPrice() + " Squad Bucks&r.\n");
             }
             message.append("Total Items: &d" + totalItems + "&r - Total Value: &d" + total + " Squad Bucks&r.");
             p.sendMessage(Main.c("Economy", message.toString()));

@@ -28,7 +28,7 @@ public class Purge {
                 public void run() {
                     end();
                 }
-            }.runTaskLater(Main.getInstance(), (endTime - System.currentTimeMillis()) / 50);
+            }.runTaskLater(Main.getInstance(), ((endTime - System.currentTimeMillis()) /1000) * 20);
         } else {
             if (end == -2) {
                 end();
@@ -71,7 +71,7 @@ public class Purge {
                 public void run() {
                     end();
                 }
-            }.runTaskLater(Main.getInstance(), 600);
+            }.runTaskLater(Main.getInstance(), ((endTime - System.currentTimeMillis()) /1000) * 20);
         }
     }
 

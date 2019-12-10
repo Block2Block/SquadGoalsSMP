@@ -34,7 +34,7 @@ public class SignClickListener implements Listener {
                         case 1:
                             if (CacheManager.getProfile(p.getUniqueId()).getBalance() >= economySign.getItem().getBuyPrice()) {
                                 CacheManager.addTransaction(p.getUniqueId(), new Transaction(economySign.getType(), economySign.getItem(), p));
-                                p.sendMessage(Main.c("Economy", "How many would you like to buy?"));
+                                p.sendMessage(Main.c("Economy", "How many would you like to buy? Type 'cancel' to cancel."));
                             } else {
                                 p.sendMessage(Main.c("Economy", "You have insufficient funds to buy any " + economySign.getItem().getMaterialName() + "s. You need at least &d" + economySign.getItem().getBuyPrice() + " Squad Bucks&r."));
                             }

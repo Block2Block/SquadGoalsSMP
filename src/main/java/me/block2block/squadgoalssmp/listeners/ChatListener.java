@@ -22,12 +22,12 @@ public class ChatListener implements Listener {
                     amount = Integer.parseInt(e.getMessage());
                 } catch (NumberFormatException ex) {
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage(Main.c("Economy", "You cannot buy that many items."));
+                    e.getPlayer().sendMessage(Main.c("Economy", "You cannot buy that many items. Please try again."));
                     return;
                 }
 
                 if (amount < 1) {
-                    e.getPlayer().sendMessage(Main.c("Economy", "You cannot buy less than 1 of an item."));
+                    e.getPlayer().sendMessage(Main.c("Economy", "You cannot buy less than 1 of an item. Please try again."));
                     e.setCancelled(true);
                     return;
                 }
@@ -35,7 +35,7 @@ public class ChatListener implements Listener {
                 Transaction transaction = CacheManager.getTransaction(e.getPlayer().getUniqueId());
 
                 if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getBalance() < (transaction.getItem().getBuyPrice() * amount)) {
-                    e.getPlayer().sendMessage(Main.c("Economy", "You have insufficient funds to buy" + amount + " " + transaction.getItem().getMaterialName() + "s. You need at least &d" + (transaction.getItem().getBuyPrice() * amount) + " Squad Bucks&r."));
+                    e.getPlayer().sendMessage(Main.c("Economy", "You have insufficient funds to buy" + amount + " " + transaction.getItem().getMaterialName() + "s. You need at least &d" + (transaction.getItem().getBuyPrice() * amount) + " Squad Bucks&r. Please try again."));
                     e.setCancelled(true);
                     return;
                 }
@@ -49,12 +49,16 @@ public class ChatListener implements Listener {
                 if (result.size() > 0) {
                     for (ItemStack is : result.values()) {
                         e.getPlayer().getWorld().dropItem(e.getPlayer().getLocation(), is);
-                        e.getPlayer().sendMessage(Main.c("Economy", "There was no space left in your inventory for all of the items, so the remaining were placed on the ground."));
                     }
+                    e.getPlayer().sendMessage(Main.c("Economy", "There was no space left in your inventory for all of the items, so the remaining were placed on the ground."));
                 }
 
                 CacheManager.transactionComplete(e.getPlayer().getUniqueId());
 
+            } else if (e.getMessage().toLowerCase().equals("cancel")) {
+                CacheManager.transactionComplete(e.getPlayer().getUniqueId());
+                e.getPlayer().sendMessage(Main.c("Economy","You have cancelled buying an item."));
+                e.setCancelled(true);
             }
         }
     }
