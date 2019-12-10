@@ -1,8 +1,8 @@
 name: SquadGoalsSMP
 author: Block2Block
 main: me.block2block.squadgoalssmp.Main
-version: 1.0-ALPHA
-api-version: 1.14
+version: "1.0"
+api-version: "1.14"
 commands:
   balance:
     aliases: [bal,money,moneyz,howmuchdoihaveinthebank,howrichami,howpoorami,howbrokeami,hownotbrokeami,howmuchmoneydoihavetowaste]
