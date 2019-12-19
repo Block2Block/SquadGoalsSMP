@@ -1,5 +1,7 @@
 langauge: java
-script: mvn clean package assembly:single
+script:
+  - wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -O BuildTools.jar && java -jar BuildTools.jar --rev 1.15.1
+  - mvn clean package assembly:single
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
