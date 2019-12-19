@@ -1,9 +1,6 @@
 package me.block2block.squadgoalssmp;
 
-import me.block2block.squadgoalssmp.commands.CommandBalance;
-import me.block2block.squadgoalssmp.commands.CommandLoadPrice;
-import me.block2block.squadgoalssmp.commands.CommandPay;
-import me.block2block.squadgoalssmp.commands.CommandPurge;
+import me.block2block.squadgoalssmp.commands.*;
 import me.block2block.squadgoalssmp.database.DatabaseManager;
 import me.block2block.squadgoalssmp.entities.EconomyItem;
 import me.block2block.squadgoalssmp.listeners.*;
@@ -98,12 +95,16 @@ public class Main extends JavaPlugin {
             e.printStackTrace();
         }
 
-        registerListeners(new DamageListener(), new DrinkPotionEvent(), new PlayerJoinListener(), new ShotBowEvent(), new PotionThrownListener(), new PlaceListener(), new BreakListener(), new SignPlaceListener(), new SignClickListener(), new ChatListener(), new InvCloseListener());
+        registerListeners(new DamageListener(), new DrinkPotionEvent(), new PlayerJoinListener(), new ShotBowEvent(), new PotionThrownListener(), new PlaceListener(), new BreakListener(), new SignPlaceListener(), new SignClickListener(), new ChatListener(), new InvCloseListener(), new MoveListener());
 
         getCommand("supersecretadmincommand").setExecutor(new CommandPurge());
         getCommand("pay").setExecutor(new CommandPay());
         getCommand("balance").setExecutor(new CommandBalance());
         getCommand("updateecon").setExecutor(new CommandLoadPrice());
+        getCommand("team").setExecutor(new CommandTeam());
+        getCommand("team").setTabCompleter(new TabCompleteTeam());
+        getCommand("trial").setExecutor(new CommandTrial());
+        getCommand("trial").setTabCompleter(new TabCompleteTrial());
 
         if (!CacheManager.isPurge()) {
             //Copying scoreboard to a new dummy one, so it cannot be modified.
@@ -165,5 +166,9 @@ public class Main extends JavaPlugin {
             e.printStackTrace();
         }
         config.options().copyHeader(true);
+    }
+
+    public static JDA getJda() {
+        return jda;
     }
 }

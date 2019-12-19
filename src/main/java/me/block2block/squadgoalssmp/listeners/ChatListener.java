@@ -3,6 +3,8 @@ package me.block2block.squadgoalssmp.listeners;
 import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.Transaction;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -59,6 +61,15 @@ public class ChatListener implements Listener {
                 CacheManager.transactionComplete(e.getPlayer().getUniqueId());
                 e.getPlayer().sendMessage(Main.c("Economy","You have cancelled buying an item."));
                 e.setCancelled(true);
+            }
+        }
+
+        e.setCancelled(true);
+        if (CacheManager.isTeamChat(e.getPlayer())) {
+            CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().chat(e.getPlayer(), e.getMessage());
+        } else {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.sendMessage(Main.c(null, CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix() + " &" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
             }
         }
     }

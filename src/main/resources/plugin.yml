@@ -9,12 +9,19 @@ commands:
     description: Check your balance.
     usage: /balance
   supersecretadmincommand:
-    description: Information will be out soonTM!
+    description: Purge related commands! Server Admin Only.
     usage: Don't use it.
   pay:
     aliases: [charity,donate,giveoutmoneyz,idontwantthismoneyanymore,sharethewealth,ineedtohidethismoneyfromtheirs,ineedtohidethismoneyfromhmrc,takemyprecioushardearnedmoney,moneyodisapearo]
     description: Pay a user money.
     usage: /pay [user] [amount]
   updateecon:
-    description: Updates Economy Values.
+    description: Updates Economy Values. Server Admin Only.
     usage: /updateecon
+  team:
+    aliases: [teams]
+    description: Team related commands and subcommands.
+    usage: /team [command arguments]
+  trial:
+    description: Trial related commands.
+    usage: /trial [command arguments]

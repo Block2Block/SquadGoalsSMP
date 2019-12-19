@@ -27,7 +27,7 @@ public class InvCloseListener implements Listener {
             if (e.getView().getTitle() == null || e.getView().getTitle().equals("")) {
                 return;
             }
-            if (!ChatColor.stripColor(e.getView().getTitle()).equals("Please put any items you wish to sell here!") && e.getInventory().getHolder() != null) {
+            if (!ChatColor.stripColor(e.getView().getTitle()).equals("Please put any items you wish to sell here!") || e.getInventory().getHolder() != null) {
                 return;
             }
 
