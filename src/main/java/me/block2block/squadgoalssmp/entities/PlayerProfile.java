@@ -1,5 +1,6 @@
 package me.block2block.squadgoalssmp.entities;
 
+import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -8,6 +9,7 @@ public class PlayerProfile {
 
     private long balance;
     private Player player;
+    private Team team;
 
     public PlayerProfile(Player p) {
         p.sendMessage(Main.c("Stats Manager", "Loading profile..."));
@@ -16,6 +18,18 @@ public class PlayerProfile {
             @Override
             public void run() {
                 balance = Main.getDbManager().getBalance(p.getUniqueId());
+                int teamId = Main.getDbManager().getTeam(p.getUniqueId());
+                if (teamId == -1) {
+                    team = null;
+                } else {
+                    if (CacheManager.getTeams().containsKey(teamId)) {
+                        team = CacheManager.getTeams().get(teamId);
+                    } else {
+                        team = Main.getDbManager().getTeam(teamId);
+                        CacheManager.addTeam(team);
+                    }
+                }
+
                 p.sendMessage(Main.c("Stats Manager", "Profile successfully loaded."));
             }
         }.runTaskAsynchronously(Main.getInstance());
@@ -28,7 +42,7 @@ public class PlayerProfile {
 
     public void removeBalance(long amount) {
         balance -= amount;
-        player.sendMessage(Main.c("Money", "&d" + amount + " Squad Bucks&r has been removed from your account."));
+        player.sendMessage(Main.c("Economy", "&d" + amount + " Squad Bucks&r has been removed from your account."));
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -39,7 +53,7 @@ public class PlayerProfile {
 
     public void addBalance(long amount) {
         balance += amount;
-        player.sendMessage(Main.c("Money", "&d" + amount + " Squad Bucks&r has been added to your account."));
+        player.sendMessage(Main.c("Economy", "&d" + amount + " Squad Bucks&r has been added to your account."));
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -50,5 +64,13 @@ public class PlayerProfile {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
