@@ -21,10 +21,13 @@ public class TabCompleteTrial implements TabCompleter {
         if (command.getName().equals("trial")) {
             if (args.length == 1) {
                 List<String> subcommands = Arrays.asList("live", "die", "teleport", "startvote", "end");
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    subcommands.add(p.getName());
-                }
                 List<String> list = new ArrayList<>();
+
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (p.getName().toLowerCase().startsWith(args[0].toLowerCase())) {
+                        list.add(p.getName());
+                    }
+                }
 
                 for (String subcommand : subcommands) {
                     if (subcommand.startsWith(args[0].toLowerCase())) {

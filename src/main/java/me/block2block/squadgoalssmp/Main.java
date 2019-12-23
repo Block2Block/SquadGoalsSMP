@@ -105,6 +105,7 @@ public class Main extends JavaPlugin {
         getCommand("team").setTabCompleter(new TabCompleteTeam());
         getCommand("trial").setExecutor(new CommandTrial());
         getCommand("trial").setTabCompleter(new TabCompleteTrial());
+        getCommand("whitelist").setExecutor(new CommandWhitelist());
 
         if (!CacheManager.isPurge()) {
             //Copying scoreboard to a new dummy one, so it cannot be modified.

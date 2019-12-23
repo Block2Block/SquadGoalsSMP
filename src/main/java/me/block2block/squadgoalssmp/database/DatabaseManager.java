@@ -136,6 +136,11 @@ public class DatabaseManager {
 
     public UUID whitelist(UUID uuid, String discordID) {
         try {
+            if (discordID == null) {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO `whitelists`(discordid, uuid) VALUES ('-1','" + uuid.toString() + "')");
+                boolean result = statement.execute();
+                return null;
+            }
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM `whitelists` WHERE discordid = ('" + discordID + "')");
             ResultSet set = statement.executeQuery();
 
@@ -151,6 +156,15 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void removeWhitelist(UUID uuid) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM `whitelists` WHERE uuid = ('" + uuid.toString() + "')");
+            boolean set = statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

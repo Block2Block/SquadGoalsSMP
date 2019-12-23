@@ -22,7 +22,7 @@ public class CacheManager {
     private static Map<Player, BukkitTask> teleports = new HashMap<>();
     private static List<Player> teamChat = new ArrayList<>();
     private static Player trial;
-    private static Map<Player, Boolean> votes = new HashMap<>();
+    private static Map<Player, Boolean> votes;
 
     public static boolean isPurge() {
         return (purge != null);
@@ -159,7 +159,7 @@ public class CacheManager {
     }
 
     public static boolean isTrial() {
-        return trial == null;
+        return trial != null;
     }
 
     public static boolean isTrial(Player player)  {
