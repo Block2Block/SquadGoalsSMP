@@ -42,7 +42,7 @@ public class CommandTrial implements CommandExecutor {
                             if (CacheManager.isVoting()) {
                                 if (!CacheManager.hasVoted(p)) {
                                     CacheManager.addVote(p, false);
-                                    p.sendMessage(Main.c("Trial","You voted for: &dlive&r."));
+                                    p.sendMessage(Main.c("Trial","You voted for: &ddie&r."));
                                 } else {
                                     p.sendMessage(Main.c("Trial","You have already voted."));
                                 }
@@ -174,6 +174,7 @@ public class CommandTrial implements CommandExecutor {
                                 }
                             }
                             defendant.teleport(new Location(Bukkit.getWorld("world"),0,64,0));
+                            CacheManager.startTrial(defendant);
                         } else {
                             p.sendMessage(Main.c("Trial","That player is not online."));
                         }

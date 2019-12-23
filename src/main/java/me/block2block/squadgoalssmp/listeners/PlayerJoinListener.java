@@ -44,7 +44,7 @@ public class PlayerJoinListener implements Listener {
         CacheManager.addProfile(e.getPlayer().getUniqueId(), new PlayerProfile(e.getPlayer()));
 
         e.setJoinMessage(Main.c(null,"&d&l" + e.getPlayer().getName() + " joined the Squad."));
-        if (e.getPlayer().hasPlayedBefore()) {
+        if (!e.getPlayer().hasPlayedBefore()) {
             e.getPlayer().sendMessage(Main.c("Squad Goals SMP",
                     "&d&l&nWelcome to the Squad Goals SMP S3!\n&rWe hope you enjoy your time here! The rules " +
                             "are relatively simple. Vaults are off limits when " +

@@ -25,3 +25,6 @@ commands:
   trial:
     description: Trial related commands.
     usage: /trial [command arguments]
+  whitelist:
+    description: Whitelist players
+    usage: /whitelist [command arguments]
