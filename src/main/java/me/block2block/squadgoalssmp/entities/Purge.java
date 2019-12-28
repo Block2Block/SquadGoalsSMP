@@ -2,10 +2,7 @@ package me.block2block.squadgoalssmp.entities;
 
 import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -80,6 +77,8 @@ public class Purge {
             }.runTaskLater(Main.getInstance(), ((endTime - System.currentTimeMillis()) /1000) * 20);
 
             if (pm == PurgeMode.BLOODMOON) {
+                Bukkit.getWorld("world").setTime(18000);
+                Bukkit.getWorld("world").setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
                 bloodmoonSpawner = new BukkitRunnable() {
                     @Override
                     public void run() {
