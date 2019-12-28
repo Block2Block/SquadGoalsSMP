@@ -1,12 +1,11 @@
 langauge: java
 install: skip
 script:
-  - wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -O BuildTools.jar && java -jar BuildTools.jar --rev 1.15.1
   - mvn clean package assembly:single
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file: "target/SquadGoalsSMP-1.0-ALPHA-jar-with-dependencies.jar"
+  file: "target/SquadGoalsSMP-1.0-ALPHA.jar"
   skip_cleanup: true
 branches:
   only:

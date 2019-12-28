@@ -13,6 +13,7 @@ import static org.bukkit.Material.*;
 public enum PurgeMode {
 
     NORMAL(1, "Normal", null, null, null, null, null, null, null, null, "This is a normal purge. All weapons, armor, enchantments and potions are enabled!", true),
+    BLOODMOON(1, "Blood Moon", null, null, null, null, null, null, null, null, "This is a Blood Moon purge. Hostile mob spawning has been turned up, spawned mobs are stronger, and it will remain night-time until the purge ends!", true),
     BASIC(2, "Basic", null, new ArrayList<>(Arrays.asList(WOODEN_SWORD, BOW)), null, new ArrayList<>(Arrays.asList(LEATHER_BOOTS, LEATHER_CHESTPLATE, LEATHER_LEGGINGS, LEATHER_HELMET)), new ArrayList<>(), null, new ArrayList<>(), null, "This is a basic purge, all armor (except leather), weapons (except wooden swords & bows), enchantments, potion effects and Gapples have been disabled!", false);
 
     private int id;
