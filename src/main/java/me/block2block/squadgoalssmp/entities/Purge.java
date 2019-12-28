@@ -6,11 +6,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Purge {
 
@@ -18,6 +23,7 @@ public class Purge {
     private Scoreboard scoreboard;
     private long endTime;
     private BukkitTask timer;
+    private BukkitTask bloodmoonSpawner;
 
     public Purge(PurgeMode pm, long end) {
         this.pm = pm;
@@ -72,6 +78,72 @@ public class Purge {
                     end();
                 }
             }.runTaskLater(Main.getInstance(), ((endTime - System.currentTimeMillis()) /1000) * 20);
+
+            if (pm == PurgeMode.BLOODMOON) {
+                bloodmoonSpawner = new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        for (Player p  : Bukkit.getOnlinePlayers()) {
+                            List<Zombie> zombies = new ArrayList<>();
+                            int players = 1;
+                            for (Entity entity : p.getNearbyEntities(25, 5, 25)) {
+                                if (entity instanceof Zombie) {
+                                    zombies.add((Zombie) entity);
+                                } else if (entity instanceof Player) {
+                                    players++;
+                                }
+                            }
+
+                            if (zombies.size() < (15 * players)) {
+                                boolean addX = chooseRan(0, 1) == 0;
+                                boolean addZ = chooseRan(0, 1) == 0;
+
+                                int x = (addX)?(p.getLocation().getBlockX() + chooseRan(3, 25)):(p.getLocation().getBlockX() - chooseRan(3, 25));
+                                int z = (addZ)?(p.getLocation().getBlockZ() + chooseRan(3, 25)):(p.getLocation().getBlockZ() - chooseRan(3, 25));
+                                int y = p.getLocation().getBlockY();
+
+                                Location l = null;
+                                if (!new Location(p.getWorld(), x, y, x).getBlock().isEmpty() & !new Location(p.getWorld(), x, y + 1, x).getBlock().isEmpty()) {
+                                    l = new Location(p.getWorld(), x, y, x);
+                                } else {
+                                    for (int i = 1;i <=5;i++) {
+                                        if (!new Location(p.getWorld(), x, y + i, x).getBlock().isEmpty() & !new Location(p.getWorld(), x, y + i + 1, x).getBlock().isEmpty()) {
+                                            l = new Location(p.getWorld(), x, y + i, x);
+                                            break;
+                                        } else if (!new Location(p.getWorld(), x, y - i, x).getBlock().isEmpty() & !new Location(p.getWorld(), x, y - i + 1, x).getBlock().isEmpty()) {
+                                            l = new Location(p.getWorld(), x, y - i, x);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (l != null)  {
+                                    l = new Location(p.getWorld(), x, y,z);
+                                    Zombie zombie = (Zombie) p.getWorld().spawnEntity(l, EntityType.ZOMBIE);
+
+                                    List<Entity> entities = zombie.getNearbyEntities(25, 25, 25);
+                                    List<LivingEntity> targets = new ArrayList<>();
+                                    for (Entity entity : entities) {
+                                        if (entity instanceof Player) {
+                                            targets.add((LivingEntity) entity);
+                                        }
+                                    }
+                                    zombie.setTarget(p);
+                                    zombie.setCustomName(Main.c(null,"&4&lBlood Zombie"));
+                                    zombie.setCustomNameVisible(true);
+                                    zombie.setMaxHealth(50);
+                                    zombie.setHealth(50);
+                                    zombie.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 3, true, false, false), false);
+                                    zombie.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100000, 1, true, false, false), false);
+                                } else {
+                                    Bukkit.getLogger().info("Unable to find place to spawn zombie for " + p.getName() + ". Skipping this time.");
+                                }
+                            }
+                        }
+                    }
+                }.runTaskTimer(Main.getInstance(), 0, 40);
+            }
+
         }
     }
 
@@ -118,5 +190,15 @@ public class Purge {
 
         Main.getDbManager().endPurge(endTime);
 
+        if (bloodmoonSpawner != null) {
+            bloodmoonSpawner.cancel();
+            bloodmoonSpawner = null;
+        }
+
+    }
+
+    public static int chooseRan(int min, int max){
+        Random rn = new Random();
+        return rn.nextInt(max - min + 1) + min;
     }
 }
