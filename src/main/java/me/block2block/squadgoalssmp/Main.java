@@ -95,9 +95,9 @@ public class Main extends JavaPlugin {
             e.printStackTrace();
         }
 
-        registerListeners(new DamageListener(), new DrinkPotionEvent(), new PlayerJoinListener(), new ShotBowEvent(), new PotionThrownListener(), new PlaceListener(), new BreakListener(), new SignPlaceListener(), new SignClickListener(), new ChatListener(), new InvCloseListener(), new MoveListener());
+        registerListeners(new DamageListener(), new DrinkPotionEvent(), new PlayerJoinListener(), new ShotBowEvent(), new PotionThrownListener(), new PlaceListener(), new BreakListener(), new SignPlaceListener(), new SignClickListener(), new ChatListener(), new InvCloseListener(), new MoveListener(), new DieListener());
 
-        getCommand("supersecretadmincommand").setExecutor(new CommandPurge());
+        getCommand("purge").setExecutor(new CommandPurge());
         getCommand("pay").setExecutor(new CommandPay());
         getCommand("balance").setExecutor(new CommandBalance());
         getCommand("updateecon").setExecutor(new CommandLoadPrice());
