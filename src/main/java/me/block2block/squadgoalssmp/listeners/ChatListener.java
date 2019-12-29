@@ -68,8 +68,14 @@ public class ChatListener implements Listener {
         if (CacheManager.isTeamChat(e.getPlayer())) {
             CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().chat(e.getPlayer(), e.getMessage());
         } else {
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                p.sendMessage(Main.c(null, CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix() + " &" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
+            if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam() == null) {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    p.sendMessage(Main.c(null,  "&7" + e.getPlayer().getName() + "&r: " + e.getMessage()));
+                }
+            } else {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    p.sendMessage(Main.c(null, CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix() + " &" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
+                }
             }
         }
     }

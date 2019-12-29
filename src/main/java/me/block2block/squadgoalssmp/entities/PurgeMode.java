@@ -13,8 +13,9 @@ import static org.bukkit.Material.*;
 public enum PurgeMode {
 
     NORMAL(1, "Normal", null, null, null, null, null, null, null, null, "This is a normal purge. All weapons, armor, enchantments and potions are enabled!", true),
-    BLOODMOON(2, "Blood Moon", null, null, null, null, null, null, null, null, "This is a Blood Moon purge. Hostile mob spawning has been turned up, spawned mobs are stronger, and it will remain night-time until the purge ends!", true),
-    BASIC(3, "Basic", null, new ArrayList<>(Arrays.asList(WOODEN_SWORD, BOW)), null, new ArrayList<>(Arrays.asList(LEATHER_BOOTS, LEATHER_CHESTPLATE, LEATHER_LEGGINGS, LEATHER_HELMET)), new ArrayList<>(), null, new ArrayList<>(), null, "This is a basic purge, all armor (except leather), weapons (except wooden swords & bows), enchantments, potion effects and Gapples have been disabled!", false);
+    BLOODMOON(2, "Blood Moon", null, null, null, null, null, null, null, null, "This is a Blood Moon purge. All hostile mob spawning has been turned up, spawned mobs are stronger, and it will remain night-time until the purge ends!", true),
+    ZOMBIEAPOCALYPSE(3, "Zombie Apocalypse", null, null, null, null, null, null, null, null, "This is a Zombie Apocalypse purge. Uh oh! Walkers have been released into the wild! Zombie spawn-rates have been turned up, and zombies are stronger! It will remain night-time until the purge ends!", true),
+    BASIC(4, "Basic", null, new ArrayList<>(Arrays.asList(WOODEN_SWORD, BOW)), null, new ArrayList<>(Arrays.asList(LEATHER_BOOTS, LEATHER_CHESTPLATE, LEATHER_LEGGINGS, LEATHER_HELMET)), new ArrayList<>(), null, new ArrayList<>(), null, "This is a basic purge, all armor (except leather), weapons (except wooden swords & bows), enchantments, potion effects and Gapples have been disabled!", false);
 
     private int id;
     private String name;

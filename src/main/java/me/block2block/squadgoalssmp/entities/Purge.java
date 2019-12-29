@@ -2,8 +2,10 @@ package me.block2block.squadgoalssmp.entities;
 
 import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -43,6 +45,7 @@ public class Purge {
             assert sm != null;
             scoreboard = sm.getMainScoreboard();
             Objective objective = scoreboard.registerNewObjective("purge_kills", "playerKillCount", Main.c(null, "&d&lPurge Kills"));
+
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendMessage(Main.c("Purge", "A purge has just begun! " + pm.getDescription() + " All illegal potion effects have been removed."));
@@ -76,13 +79,17 @@ public class Purge {
                 }
             }.runTaskLater(Main.getInstance(), ((endTime - System.currentTimeMillis()) /1000) * 20);
 
-            if (pm == PurgeMode.BLOODMOON) {
+            if (pm == PurgeMode.ZOMBIEAPOCALYPSE) {
                 Bukkit.getWorld("world").setTime(18000);
                 Bukkit.getWorld("world").setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+                Bukkit.getWorld("world").setGameRule(GameRule.DO_MOB_SPAWNING, false);
                 bloodmoonSpawner = new BukkitRunnable() {
                     @Override
                     public void run() {
                         for (Player p  : Bukkit.getOnlinePlayers()) {
+                            if (p.getGameMode() == GameMode.SPECTATOR) {
+                                return;
+                            }
                             List<Zombie> zombies = new ArrayList<>();
                             int players = 1;
                             for (Entity entity : p.getNearbyEntities(25, 5, 25)) {
@@ -93,7 +100,7 @@ public class Purge {
                                 }
                             }
 
-                            if (zombies.size() < (15 * players)) {
+                            if (zombies.size() < (10 * players)) {
                                 boolean addX = chooseRan(0, 1) == 0;
                                 boolean addZ = chooseRan(0, 1) == 0;
 
@@ -102,15 +109,15 @@ public class Purge {
                                 int y = p.getLocation().getBlockY();
 
                                 Location l = null;
-                                if (!new Location(p.getWorld(), x, y, x).getBlock().isEmpty() & !new Location(p.getWorld(), x, y + 1, x).getBlock().isEmpty()) {
-                                    l = new Location(p.getWorld(), x, y, x);
+                                if (new Location(p.getWorld(), x, y, z).getBlock().isEmpty() & new Location(p.getWorld(), x, y + 1, z).getBlock().isEmpty() & !new Location(p.getWorld(), x, y - 1, z).getBlock().isEmpty() & !new Location(p.getWorld(), x, y - 1, z).getBlock().isLiquid()) {
+                                    l = new Location(p.getWorld(), x, y, z);
                                 } else {
                                     for (int i = 1;i <=5;i++) {
-                                        if (!new Location(p.getWorld(), x, y + i, x).getBlock().isEmpty() & !new Location(p.getWorld(), x, y + i + 1, x).getBlock().isEmpty()) {
-                                            l = new Location(p.getWorld(), x, y + i, x);
+                                        if (new Location(p.getWorld(), x, y + i, z).getBlock().isEmpty() & new Location(p.getWorld(), x, y + i + 1, z).getBlock().isEmpty() & !new Location(p.getWorld(), x, y + i - 1, z).getBlock().isEmpty()) {
+                                            l = new Location(p.getWorld(), x, y + i, z);
                                             break;
-                                        } else if (!new Location(p.getWorld(), x, y - i, x).getBlock().isEmpty() & !new Location(p.getWorld(), x, y - i + 1, x).getBlock().isEmpty()) {
-                                            l = new Location(p.getWorld(), x, y - i, x);
+                                        } else if (!new Location(p.getWorld(), x, y - i, z).getBlock().isEmpty() & !new Location(p.getWorld(), x, y - i + 1, z).getBlock().isEmpty() & !new Location(p.getWorld(), x, y - i - 1, z).getBlock().isEmpty()) {
+                                            l = new Location(p.getWorld(), x, y - i, z);
                                             break;
                                         }
                                     }
@@ -121,26 +128,107 @@ public class Purge {
                                     Zombie zombie = (Zombie) p.getWorld().spawnEntity(l, EntityType.ZOMBIE);
 
                                     List<Entity> entities = zombie.getNearbyEntities(25, 25, 25);
-                                    List<LivingEntity> targets = new ArrayList<>();
-                                    for (Entity entity : entities) {
-                                        if (entity instanceof Player) {
-                                            targets.add((LivingEntity) entity);
-                                        }
-                                    }
                                     zombie.setTarget(p);
-                                    zombie.setCustomName(Main.c(null,"&4&lBlood Zombie"));
+                                    zombie.setCustomName(Main.c(null,"&4&lWalker"));
                                     zombie.setCustomNameVisible(true);
                                     zombie.setMaxHealth(50);
                                     zombie.setHealth(50);
                                     zombie.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 3, true, false, false), false);
                                     zombie.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100000, 1, true, false, false), false);
-                                } else {
-                                    Bukkit.getLogger().info("Unable to find place to spawn zombie for " + p.getName() + ". Skipping this time.");
                                 }
                             }
                         }
                     }
-                }.runTaskTimer(Main.getInstance(), 0, 40);
+                }.runTaskTimer(Main.getInstance(), 0, 200);
+            } else if (pm == PurgeMode.BLOODMOON) {
+                Bukkit.getWorld("world").setTime(18000);
+                Bukkit.getWorld("world").setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+                Bukkit.getWorld("world").setGameRule(GameRule.DO_MOB_SPAWNING, false);
+                bloodmoonSpawner = new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        for (Player p  : Bukkit.getOnlinePlayers()) {
+                            if (p.getGameMode() == GameMode.SPECTATOR) {
+                                return;
+                            }
+                            List<Mob> zombies = new ArrayList<>();
+                            int players = 1;
+                            for (Entity entity : p.getNearbyEntities(25, 5, 25)) {
+                                if (entity instanceof Monster || entity instanceof Wolf || entity instanceof Bee) {
+                                    zombies.add((Mob) entity);
+                                } else if (entity instanceof Player) {
+                                    players++;
+                                }
+                            }
+
+                            if (zombies.size() < (10 * players)) {
+                                int type = chooseRan(0, 3);
+                                EntityType entity = EntityType.ZOMBIE;
+                                switch (type) {
+                                    case 0:
+                                        entity = EntityType.WOLF;
+                                        break;
+                                    case 1:
+                                        entity = EntityType.ZOMBIE;
+                                        break;
+                                    case 2:
+                                        entity = EntityType.SKELETON;
+                                        break;
+                                    case 3:
+                                        entity = EntityType.SPIDER;
+                                        break;
+                                }
+                                boolean addX = chooseRan(0, 1) == 0;
+                                boolean addZ = chooseRan(0, 1) == 0;
+
+                                int x = (addX)?(p.getLocation().getBlockX() + chooseRan(3, 25)):(p.getLocation().getBlockX() - chooseRan(3, 25));
+                                int z = (addZ)?(p.getLocation().getBlockZ() + chooseRan(3, 25)):(p.getLocation().getBlockZ() - chooseRan(3, 25));
+                                int y = p.getLocation().getBlockY();
+
+                                Location l = null;
+                                if (new Location(p.getWorld(), x, y, z).getBlock().isEmpty() & new Location(p.getWorld(), x, y + 1, z).getBlock().isEmpty() & !new Location(p.getWorld(), x, y - 1, z).getBlock().isEmpty() & !new Location(p.getWorld(), x, y - 1, z).getBlock().isLiquid()) {
+                                    l = new Location(p.getWorld(), x, y, z);
+                                } else {
+                                    for (int i = 1;i <=5;i++) {
+                                        if (new Location(p.getWorld(), x, y + i, z).getBlock().isEmpty() & new Location(p.getWorld(), x, y + i + 1, z).getBlock().isEmpty() & !new Location(p.getWorld(), x, y + i - 1, z).getBlock().isEmpty()) {
+                                            l = new Location(p.getWorld(), x, y + i, z);
+                                            break;
+                                        } else if (!new Location(p.getWorld(), x, y - i, z).getBlock().isEmpty() & !new Location(p.getWorld(), x, y - i + 1, z).getBlock().isEmpty() & !new Location(p.getWorld(), x, y - i - 1, z).getBlock().isEmpty()) {
+                                            l = new Location(p.getWorld(), x, y - i, z);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (l != null)  {
+                                    l = new Location(p.getWorld(), x, y,z);
+                                    Mob mob = (Mob) p.getWorld().spawnEntity(l, entity);
+
+                                    List<Entity> entities = mob.getNearbyEntities(25, 25, 25);
+                                    mob.setTarget(p);
+                                    mob.setCustomName(Main.c(null,"&4&lBlood " + WordUtils.capitalize(entity.name().toLowerCase())));
+                                    mob.setCustomNameVisible(true);
+                                    if (mob instanceof Wolf) {
+                                        ((Wolf)mob).setAngry(true);
+                                    } else if (mob instanceof Skeleton) {
+                                        mob.getEquipment().setItemInMainHand(new ItemStack(Material.BOW));
+                                        mob.setMaxHealth(50);
+                                        mob.setHealth(50);
+                                        mob.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, true, false, false), false);
+                                        mob.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 0, true, false, false), false);
+                                        return;
+                                    } else if (mob instanceof Spider) {
+                                        mob.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100000, 0, true, false, false), false);
+                                    }
+                                    mob.setMaxHealth(50);
+                                    mob.setHealth(50);
+                                    mob.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100000, 3, true, false, false), false);
+                                    mob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100000, 1, true, false, false), false);
+                                }
+                            }
+                        }
+                    }
+                }.runTaskTimer(Main.getInstance(), 0, 200);
             }
 
         }
@@ -192,6 +280,8 @@ public class Purge {
         if (bloodmoonSpawner != null) {
             bloodmoonSpawner.cancel();
             bloodmoonSpawner = null;
+            Bukkit.getWorld("world").setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
+            Bukkit.getWorld("world").setGameRule(GameRule.DO_MOB_SPAWNING, true);
         }
 
     }

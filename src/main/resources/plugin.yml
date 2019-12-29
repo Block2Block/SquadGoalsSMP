@@ -8,7 +8,7 @@ commands:
     aliases: [bal,money,moneyz,howmuchdoihaveinthebank,howrichami,howpoorami,howbrokeami,hownotbrokeami,howmuchmoneydoihavetowaste]
     description: Check your balance.
     usage: /balance
-  supersecretadmincommand:
+  purge:
     description: Purge related commands! Server Admin Only.
     usage: Don't use it.
   pay:
