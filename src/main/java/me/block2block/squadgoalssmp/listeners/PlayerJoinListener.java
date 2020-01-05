@@ -63,8 +63,10 @@ public class PlayerJoinListener implements Listener {
             return;
         }
         e.setQuitMessage(Main.c(null,"&d&l" + e.getPlayer().getName() + " left the Squad."));
-        if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().isOffline()) {
-            CacheManager.getTeams().remove(CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getId());
+        if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam() != null) {
+            if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().isOffline()) {
+                CacheManager.getTeams().remove(CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getId());
+            }
         }
         CacheManager.removeProfile(e.getPlayer().getUniqueId());
         CacheManager.transactionComplete(e.getPlayer().getUniqueId());
