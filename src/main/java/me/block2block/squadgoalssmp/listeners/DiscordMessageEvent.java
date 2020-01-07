@@ -21,6 +21,10 @@ public class DiscordMessageEvent extends ListenerAdapter {
                         if (e.getMessage().getContentStripped().split(" ").length == 2) {
                             String[] args = e.getMessage().getContentStripped().split(" ");
                             if (args[1].matches("[0-9A-Za-z_]{3,16}")) {
+                                if (!Main.isReady()) {
+                                    e.getMessage().getChannel().sendMessage("The server is still loading, please wait.").queue();
+                                    return;
+                                }
                                 new BukkitRunnable() {
                                     @Override
                                     public void run() {

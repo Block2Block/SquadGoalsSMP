@@ -4,6 +4,7 @@ import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.Transaction;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -73,8 +74,14 @@ public class ChatListener implements Listener {
                     p.sendMessage(Main.c(null,  "&7" + e.getPlayer().getName() + "&r: " + e.getMessage()));
                 }
             } else {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendMessage(Main.c(null, CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix() + " &" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
+                if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&',CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix())).equalsIgnoreCase("")) {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.sendMessage(Main.c(null, CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
+                    }
+                } else {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.sendMessage(Main.c(null, CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix() + " &" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
+                    }
                 }
             }
         }

@@ -37,6 +37,8 @@ public class Main extends JavaPlugin {
     private static File configFile;
     private static FileConfiguration config;
 
+    private static boolean ready;
+
     public static String c(String prefix, String message) {
         return ChatColor.translateAlternateColorCodes('&', ((prefix == null) ? "&r" : "&5" + prefix + ">> &r") + message);
     }
@@ -171,5 +173,13 @@ public class Main extends JavaPlugin {
 
     public static JDA getJda() {
         return jda;
+    }
+
+    public static boolean isReady() {
+        return ready;
+    }
+
+    public static void ready() {
+        ready = true;
     }
 }
