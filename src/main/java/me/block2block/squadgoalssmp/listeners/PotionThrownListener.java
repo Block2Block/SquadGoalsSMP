@@ -3,6 +3,7 @@ package me.block2block.squadgoalssmp.listeners;
 import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.Purge;
+import me.block2block.squadgoalssmp.entities.PurgeMode;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,8 +38,14 @@ public class PotionThrownListener implements Listener {
                     }
                 }
             }
-
-
+            if (CacheManager.getPurge().getPm() == PurgeMode.BLOODMOON || CacheManager.getPurge().getPm() == PurgeMode.ZOMBIEAPOCALYPSE) {
+                if (e.getClickedBlock() != null) {
+                    if (e.getClickedBlock().getType().name().toLowerCase().contains("bed")) {
+                        e.setCancelled(true);
+                        e.getPlayer().sendMessage(Main.c("Purge","You cannot sleep during a " + CacheManager.getPurge().getPm().getName() + " purge."));
+                    }
+                }
+            }
         }
     }
 

@@ -9,12 +9,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.potion.PotionEffect;
 
 public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onConnection(AsyncPlayerPreLoginEvent e) {
+        if (!Main.isReady()) {
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "The server is still loading. Please try again in a few minutes.");
+        }
         if (!CacheManager.isWhitelisted(e.getUniqueId())) {
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, "You are not whitelisted on this server!");
         } else {
@@ -75,6 +79,13 @@ public class PlayerJoinListener implements Listener {
         }
         CacheManager.getTeleports().remove(e.getPlayer());
         CacheManager.getInvites().remove(e.getPlayer().getUniqueId());
+    }
+
+    @EventHandler
+    public void onReady(ServerLoadEvent e) {
+        if (e.getType() == ServerLoadEvent.LoadType.STARTUP) {
+            Main.ready();
+        }
     }
 
 }

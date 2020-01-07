@@ -227,7 +227,7 @@ public class CommandTeam implements CommandExecutor {
                                         if (!Main.getDbManager().teamExists(args[1])) {
                                             int id = Main.getDbManager().createTeam(args[1], p.getUniqueId().toString());
                                             SMPPlayer smpPlayer = new SMPPlayer(p);
-                                            Team team = new Team(id, args[1], "", smpPlayer, new ArrayList<>(Collections.singletonList(smpPlayer)), 0, null, "WHITE");
+                                            Team team = new Team(id, args[1], "", smpPlayer, new ArrayList<>(Collections.singletonList(smpPlayer)), 0, null, "GRAY");
                                             CacheManager.addTeam(team);
                                             CacheManager.getProfile(p.getUniqueId()).setTeam(team);
                                             p.sendMessage(Main.c("Teams", "Team created! You can now invite players and use Team homes!"));
