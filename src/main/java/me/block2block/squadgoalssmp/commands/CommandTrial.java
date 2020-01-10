@@ -56,7 +56,7 @@ public class CommandTrial implements CommandExecutor {
                     case "teleport":
                         if (CacheManager.isTrial()) {
                             p.sendMessage(Main.c("Trial","You have been teleported to the Courthouse."));
-                            p.teleport(new Location(Bukkit.getWorld("world"),0,64,0));
+                            p.teleport(new Location(Bukkit.getWorld("world"),-210.5,63.5,10.5, 0, 0));
                         } else {
                             p.sendMessage(Main.c("Trial","There is not currently a trial in progress."));
                         }
@@ -87,7 +87,7 @@ public class CommandTrial implements CommandExecutor {
                                                         player.sendMessage(Main.c("Trial","The votes have been counted, and the people have voted... &d&lDIE&r! &c&lBURN BABY, BURN."));
                                                     }
                                                     Player defendant = CacheManager.getDefendant();
-                                                    ((Chest) (new Location(Bukkit.getWorld("world"),0, 64, 0)).getBlock()).getInventory().addItem(defendant.getInventory().getContents());
+                                                    ((Chest) (new Location(Bukkit.getWorld("world"),-211, 90, 37)).getBlock()).getInventory().addItem(defendant.getInventory().getContents());
                                                     defendant.setFireTicks(600);
                                                     CacheManager.endVote();
                                                 } else {
@@ -165,15 +165,16 @@ public class CommandTrial implements CommandExecutor {
                         }
                         if (Bukkit.getPlayer(args[0]) != null) {
                             Player defendant = Bukkit.getPlayer(args[0]);
-                            ((Chest) (new Location(Bukkit.getWorld("world"),0, 64, 0)).getBlock()).getInventory().addItem(defendant.getInventory().getContents());
+                            ((Chest) (new Location(Bukkit.getWorld("world"),-211, 90, 37)).getBlock()).getInventory().addItem(defendant.getInventory().getContents());
                             for (Player player : Bukkit.getOnlinePlayers()) {
                                 if (!player.getUniqueId().equals(defendant.getUniqueId())) {
-                                    p.sendMessage(Main.c("Trial","A trial has just begun! Defendant: &d" + defendant.getName() + "&r."));
+                                    p.sendMessage(Main.c("Trial","A trial has just begun! Defendant: &d" + defendant.getName() + "&r. Today's Judge: &d" + p.getName() + "&r."));
                                 } else {
                                     p.sendMessage(Main.c("Trial","You have been sent to trial!"));
                                 }
                             }
-                            defendant.teleport(new Location(Bukkit.getWorld("world"),0,64,0));
+                            defendant.teleport(new Location(Bukkit.getWorld("world"),-210.5,66.5,56.5));
+                            p.teleport(new Location(Bukkit.getWorld("world"),-204.5, 67.5, 39.5, 0, 0));
                             CacheManager.startTrial(defendant);
                         } else {
                             p.sendMessage(Main.c("Trial","That player is not online."));
