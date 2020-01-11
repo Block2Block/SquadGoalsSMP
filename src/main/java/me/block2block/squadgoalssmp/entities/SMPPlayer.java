@@ -3,7 +3,6 @@ package me.block2block.squadgoalssmp.entities;
 import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.utils.NameFetcher;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;

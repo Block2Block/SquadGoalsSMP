@@ -1,7 +1,5 @@
 package me.block2block.squadgoalssmp.commands;
 
-import me.block2block.squadgoalssmp.CacheManager;
-import me.block2block.squadgoalssmp.entities.SMPPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
