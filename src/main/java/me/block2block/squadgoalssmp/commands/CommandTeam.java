@@ -147,6 +147,10 @@ public class CommandTeam implements CommandExecutor {
                         if (CacheManager.getProfile(p.getUniqueId()).getTeam() != null) {
                             Team team = CacheManager.getProfile(p.getUniqueId()).getTeam();
                             if (team.getHome() != null) {
+                                if (CacheManager.isTrial() && CacheManager.getDefendant().getUniqueId().equals(p.getUniqueId())) {
+                                    p.sendMessage(Main.c("Trial","You cannot teleport, you are on trial!"));
+                                    return true;
+                                }
                                 if (!CacheManager.getTeleports().containsKey(p)) {
                                     p.sendMessage(Main.c("Teams", "Please do not move. You will be teleported in &d10 seconds&r."));
                                     CacheManager.getTeleports().put(p, new BukkitRunnable() {

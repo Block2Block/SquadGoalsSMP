@@ -11,6 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,15 +29,19 @@ public class CommandTrial implements CommandExecutor {
                 switch (args[0].toLowerCase()) {
                     case "live":
                         if (CacheManager.isTrial()) {
-                            if (CacheManager.isVoting()) {
-                                if (!CacheManager.hasVoted(p)) {
-                                    CacheManager.addVote(p, true);
-                                    p.sendMessage(Main.c("Trial","You voted for: &dlive&r."));
+                            if (!CacheManager.getDefendant().getUniqueId().equals(p.getUniqueId())) {
+                                if (CacheManager.isVoting()) {
+                                    if (!CacheManager.hasVoted(p)) {
+                                        CacheManager.addVote(p, true);
+                                        p.sendMessage(Main.c("Trial","You voted for: &dlive&r."));
+                                    } else {
+                                        p.sendMessage(Main.c("Trial","You have already voted."));
+                                    }
                                 } else {
-                                    p.sendMessage(Main.c("Trial","You have already voted."));
+                                    p.sendMessage(Main.c("Trial","The vote is not currently active."));
                                 }
                             } else {
-                                p.sendMessage(Main.c("Trial","The vote is not currently active."));
+                                p.sendMessage(Main.c("Trial","You cannot vote, you are on trial!"));
                             }
                         } else {
                             p.sendMessage(Main.c("Trial","There is not currently a trial in progress."));
@@ -44,15 +49,19 @@ public class CommandTrial implements CommandExecutor {
                         break;
                     case "die":
                         if (CacheManager.isTrial()) {
-                            if (CacheManager.isVoting()) {
-                                if (!CacheManager.hasVoted(p)) {
-                                    CacheManager.addVote(p, false);
-                                    p.sendMessage(Main.c("Trial","You voted for: &ddie&r."));
+                            if (!CacheManager.getDefendant().getUniqueId().equals(p.getUniqueId())) {
+                                if (CacheManager.isVoting()) {
+                                    if (!CacheManager.hasVoted(p)) {
+                                        CacheManager.addVote(p, false);
+                                        p.sendMessage(Main.c("Trial","You voted for: &ddie&r."));
+                                    } else {
+                                        p.sendMessage(Main.c("Trial","You have already voted."));
+                                    }
                                 } else {
-                                    p.sendMessage(Main.c("Trial","You have already voted."));
+                                    p.sendMessage(Main.c("Trial","The vote is not currently active."));
                                 }
                             } else {
-                                p.sendMessage(Main.c("Trial","The vote is not currently active."));
+                                p.sendMessage(Main.c("Trial","You cannot vote, you are on trial!"));
                             }
                         } else {
                             p.sendMessage(Main.c("Trial","There is not currently a trial in progress."));
@@ -60,8 +69,12 @@ public class CommandTrial implements CommandExecutor {
                         break;
                     case "teleport":
                         if (CacheManager.isTrial()) {
-                            p.sendMessage(Main.c("Trial","You have been teleported to the Courthouse."));
-                            p.teleport(new Location(Bukkit.getWorld("world"),-210.5,63.5,10.5, 0, 0));
+                            if (!CacheManager.getDefendant().getUniqueId().equals(p.getUniqueId())) {
+                                p.sendMessage(Main.c("Trial","You have been teleported to the Courthouse."));
+                                p.teleport(new Location(Bukkit.getWorld("world"),-210.5,63.5,10.5, 0, 0));
+                            } else {
+                                p.sendMessage(Main.c("Trial","You cannot teleport, you are on trial!"));
+                            }
                         } else {
                             p.sendMessage(Main.c("Trial","There is not currently a trial in progress."));
                         }
@@ -92,7 +105,6 @@ public class CommandTrial implements CommandExecutor {
                                                         player.sendMessage(Main.c("Trial","The votes have been counted, and the people have voted... &d&lDIE&r! &c&lBURN BABY, BURN."));
                                                     }
                                                     Player defendant = CacheManager.getDefendant();
-                                                    ((Chest) (new Location(Bukkit.getWorld("world"),-211, 90, 37)).getBlock()).getInventory().addItem(defendant.getInventory().getContents());
                                                     defendant.setFireTicks(600);
                                                     CacheManager.endVote();
                                                 } else {
@@ -136,11 +148,14 @@ public class CommandTrial implements CommandExecutor {
                                         Player defendant = CacheManager.getDefendant();
                                         defendant.setFireTicks(600);
                                         CacheManager.endVote();
+                                        p.teleport(new Location(Bukkit.getWorld("world"),-210.5,63.5,10.5, 0, 0));
                                     } else {
                                         for (Player player : Bukkit.getOnlinePlayers()) {
                                             player.sendMessage(Main.c("Trial", "The votes have been counted, and the people have voted... &d&lLIVE"));
                                         }
+                                        CacheManager.getDefendant().teleport(new Location(Bukkit.getWorld("world"),-210.5,63.5,10.5, 0, 0));
                                         CacheManager.endVote();
+                                        p.teleport(new Location(Bukkit.getWorld("world"),-210.5,63.5,10.5, 0, 0));
                                     }
                                 } else {
                                     CacheManager.endVote();
@@ -170,18 +185,16 @@ public class CommandTrial implements CommandExecutor {
                         }
                         if (Bukkit.getPlayer(args[0]) != null) {
                             Player defendant = Bukkit.getPlayer(args[0]);
-                            List<ItemStack> stack = new ArrayList<>();
-                            for (ItemStack i : defendant.getInventory().getContents()) {
-                                if (i != null && i.getType() != Material.AIR) {
-                                    stack.add(i);
-                                }
+                            ((Chest) (new Location(Bukkit.getWorld("world"),-211, 90, 37)).getBlock().getState()).getInventory().setContents(defendant.getInventory().getStorageContents());
+                            defendant.getInventory().clear();
+                            for (PotionEffect pe : defendant.getActivePotionEffects()) {
+                                defendant.removePotionEffect(pe.getType());
                             }
-                            ((Chest) (new Location(Bukkit.getWorld("world"),-211, 90, 37)).getBlock().getState()).getInventory().addItem((ItemStack[]) stack.toArray());
                             for (Player player : Bukkit.getOnlinePlayers()) {
                                 if (!player.getUniqueId().equals(defendant.getUniqueId())) {
-                                    p.sendMessage(Main.c("Trial","A trial has just begun! Defendant: &d" + defendant.getName() + "&r. Today's Judge: &d" + p.getName() + "&r."));
+                                    player.sendMessage(Main.c("Trial","A trial has just begun! Defendant: &d" + defendant.getName() + "&r. Today's Judge: &d" + p.getName() + "&r. Use &d/trial teleport&r to teleport to the courthouse!"));
                                 } else {
-                                    p.sendMessage(Main.c("Trial","You have been sent to trial!"));
+                                    player.sendMessage(Main.c("Trial","You have been sent to trial!"));
                                 }
                             }
                             defendant.teleport(new Location(Bukkit.getWorld("world"),-210.5,66.5,56.5));
