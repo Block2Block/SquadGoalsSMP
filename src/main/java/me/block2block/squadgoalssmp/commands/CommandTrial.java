@@ -165,7 +165,7 @@ public class CommandTrial implements CommandExecutor {
                         }
                         if (Bukkit.getPlayer(args[0]) != null) {
                             Player defendant = Bukkit.getPlayer(args[0]);
-                            ((Chest) (new Location(Bukkit.getWorld("world"),-211, 90, 37)).getBlock()).getInventory().addItem(defendant.getInventory().getContents());
+                            ((Chest) (new Location(Bukkit.getWorld("world"),-211, 90, 37)).getBlock().getState()).getInventory().addItem(defendant.getInventory().getContents());
                             for (Player player : Bukkit.getOnlinePlayers()) {
                                 if (!player.getUniqueId().equals(defendant.getUniqueId())) {
                                     p.sendMessage(Main.c("Trial","A trial has just begun! Defendant: &d" + defendant.getName() + "&r. Today's Judge: &d" + p.getName() + "&r."));
