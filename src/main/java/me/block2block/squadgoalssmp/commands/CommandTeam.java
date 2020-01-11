@@ -73,7 +73,7 @@ public class CommandTeam implements CommandExecutor {
                                         for (SMPPlayer member : team.getMembers()) {
                                             if (!member.getUuid().equals(p.getUniqueId())) {
                                                 if (member.getPlayer().isOnline()) {
-                                                    Player onlineMember = (Player) member.getPlayer();
+                                                    Player onlineMember = (Player) member.getPlayer().getPlayer();
                                                     onlineMember.sendMessage(Main.c("Team", "&d" + target.getName() + " &rhas been invited to your team."));
                                                 }
                                             }
