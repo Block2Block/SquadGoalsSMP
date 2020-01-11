@@ -4,13 +4,18 @@ import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommandTrial implements CommandExecutor {
 
@@ -165,7 +170,13 @@ public class CommandTrial implements CommandExecutor {
                         }
                         if (Bukkit.getPlayer(args[0]) != null) {
                             Player defendant = Bukkit.getPlayer(args[0]);
-                            ((Chest) (new Location(Bukkit.getWorld("world"),-211, 90, 37)).getBlock().getState()).getInventory().addItem(defendant.getInventory().getContents());
+                            List<ItemStack> stack = new ArrayList<>();
+                            for (ItemStack i : defendant.getInventory().getContents()) {
+                                if (i != null && i.getType() != Material.AIR) {
+                                    stack.add(i);
+                                }
+                            }
+                            ((Chest) (new Location(Bukkit.getWorld("world"),-211, 90, 37)).getBlock().getState()).getInventory().addItem((ItemStack[]) stack.toArray());
                             for (Player player : Bukkit.getOnlinePlayers()) {
                                 if (!player.getUniqueId().equals(defendant.getUniqueId())) {
                                     p.sendMessage(Main.c("Trial","A trial has just begun! Defendant: &d" + defendant.getName() + "&r. Today's Judge: &d" + p.getName() + "&r."));
