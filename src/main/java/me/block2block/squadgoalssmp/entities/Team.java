@@ -214,6 +214,9 @@ public class Team {
         }.runTaskAsynchronously(Main.getInstance());
         team.unregister();
         CacheManager.getProfile(leader.getUuid()).addBalance(bank);
+        for (SMPPlayer player : members) {
+            CacheManager.getProfile(player.getUuid()).setTeam(null);
+        }
     }
 
     public boolean isOffline() {
