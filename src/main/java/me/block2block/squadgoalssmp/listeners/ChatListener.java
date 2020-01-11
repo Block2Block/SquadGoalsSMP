@@ -76,7 +76,7 @@ public class ChatListener implements Listener {
             } else {
                 if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&',CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix())).equalsIgnoreCase("")) {
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.sendMessage(Main.c(null, CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
+                        p.sendMessage(Main.c(null,  "&" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
                     }
                 } else {
                     for (Player p : Bukkit.getOnlinePlayers()) {
