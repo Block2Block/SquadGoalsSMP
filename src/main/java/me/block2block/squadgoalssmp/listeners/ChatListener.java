@@ -3,6 +3,7 @@ package me.block2block.squadgoalssmp.listeners;
 import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.Transaction;
+import me.block2block.squadgoalssmp.utils.DiscordUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -68,20 +69,28 @@ public class ChatListener implements Listener {
         e.setCancelled(true);
         if (CacheManager.isTeamChat(e.getPlayer())) {
             CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().chat(e.getPlayer(), e.getMessage());
+            Bukkit.getLogger().info("[Team Chat] " + e.getPlayer().getName() + ": " + e.getMessage());
+            DiscordUtil.teamChat(e.getMessage(), e.getPlayer());
         } else {
             if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam() == null) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     p.sendMessage(Main.c(null,  "&7" + e.getPlayer().getName() + "&r: " + e.getMessage()));
                 }
+                Bukkit.getLogger().info(e.getPlayer().getName() + ": " + e.getMessage());
+                DiscordUtil.chat(e.getMessage(), e.getPlayer());
             } else {
                 if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&',CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix())).equalsIgnoreCase("")) {
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.sendMessage(Main.c(null,  "&" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
                     }
+                    Bukkit.getLogger().info(e.getPlayer().getName() + ": " + e.getMessage());
+                    DiscordUtil.chat(e.getMessage(), e.getPlayer());
                 } else {
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.sendMessage(Main.c(null, CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix() + " &" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
                     }
+                    Bukkit.getLogger().info(e.getPlayer().getName() + ": " + e.getMessage());
+                    DiscordUtil.chat(e.getMessage(), e.getPlayer());
                 }
             }
         }

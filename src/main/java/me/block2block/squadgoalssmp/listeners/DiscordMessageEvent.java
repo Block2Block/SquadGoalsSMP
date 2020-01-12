@@ -6,6 +6,8 @@ import me.block2block.squadgoalssmp.utils.UUIDFetcher;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
@@ -44,6 +46,10 @@ public class DiscordMessageEvent extends ListenerAdapter {
                         } else {
                             e.getMessage().getChannel().sendMessage("Invalid syntax. Correct syntax: **!whitelist [username]**").queue();
                         }
+                    }
+                } else if (e.getChannel().getId().equals("666013172444037178")) {
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.sendMessage(Main.c( null, "&3[Discord] &r" + e.getAuthor().getName() + ": " + e.getMessage().getContentRaw()));
                     }
                 }
             }

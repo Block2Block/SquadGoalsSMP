@@ -19,4 +19,12 @@ public class DiscordUtil {
         Main.getJda().getTextChannelById("655038222811791370").sendMessage(eb.build()).queue();
     }
 
+    public static void chat(String message, Player player) {
+        Main.getJda().getTextChannelById("666013172444037178").sendMessage(player.getName() + ": " + message).queue();
+    }
+
+    public static void teamChat(String message, Player player) {
+        Main.getJda().getTextChannelById("666013172444037178").sendMessage("[Team Chat] " + player.getName() + ": " + message).queue();
+    }
+
 }
