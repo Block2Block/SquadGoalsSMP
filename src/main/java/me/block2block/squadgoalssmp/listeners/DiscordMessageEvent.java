@@ -33,6 +33,9 @@ public class DiscordMessageEvent extends ListenerAdapter {
                                         UUID uuid = UUIDFetcher.getUUID(args[1]);
                                         UUID previous = Main.getDbManager().whitelist(uuid, e.getAuthor().getId());
                                         if (previous != null) {
+                                            if (Bukkit.getPlayer(previous) != null) {
+                                                Bukkit.getPlayer(previous).kickPlayer("You have been unwhitelisted.");
+                                            }
                                             CacheManager.removeWhitelist(previous);
                                         }
                                         CacheManager.addWhitelist(uuid);
