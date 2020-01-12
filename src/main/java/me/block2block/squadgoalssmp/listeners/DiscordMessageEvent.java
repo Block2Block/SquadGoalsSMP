@@ -48,8 +48,10 @@ public class DiscordMessageEvent extends ListenerAdapter {
                         }
                     }
                 } else if (e.getChannel().getId().equals("666013172444037178")) {
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.sendMessage(Main.c( null, "&3[Discord] &r" + e.getAuthor().getName() + ": " + e.getMessage().getContentRaw()));
+                    if (!e.getAuthor().getId().equalsIgnoreCase("498915400000471060")) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            p.sendMessage(Main.c( null, "&3[Discord] &r" + e.getAuthor().getName() + ": " + e.getMessage().getContentRaw()));
+                        }
                     }
                 }
             }
