@@ -69,25 +69,25 @@ public class ChatListener implements Listener {
         e.setCancelled(true);
         if (CacheManager.isTeamChat(e.getPlayer())) {
             CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().chat(e.getPlayer(), e.getMessage());
-            Bukkit.getLogger().info("[Team Chat] " + e.getPlayer().getName() + ": " + e.getMessage());
+            Bukkit.getLogger().info("[Team Chat] " + ((e.getPlayer().isOp())?"&d&l✦ ":"") + e.getPlayer().getName() + ": " + e.getMessage());
             DiscordUtil.teamChat(e.getMessage(), e.getPlayer());
         } else {
             if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam() == null) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendMessage(Main.c(null,  "&7" + e.getPlayer().getName() + "&r: " + e.getMessage()));
+                    p.sendMessage(Main.c(null,  ((e.getPlayer().isOp())?"&d&l✦ ":"") + "&7" + e.getPlayer().getName() + "&r: " + e.getMessage()));
                 }
                 Bukkit.getLogger().info(e.getPlayer().getName() + ": " + e.getMessage());
                 DiscordUtil.chat(e.getMessage(), e.getPlayer());
             } else {
                 if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&',CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix())).equalsIgnoreCase("")) {
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.sendMessage(Main.c(null,  "&" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
+                        p.sendMessage(Main.c(null,  ((e.getPlayer().isOp())?"&d&l✦ ":"") + "&" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
                     }
                     Bukkit.getLogger().info(e.getPlayer().getName() + ": " + e.getMessage());
                     DiscordUtil.chat(e.getMessage(), e.getPlayer());
                 } else {
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.sendMessage(Main.c(null, CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix() + " &" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
+                        p.sendMessage(Main.c(null, ((e.getPlayer().isOp())?"&d&l✦ ":"") + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix() + " &" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
                     }
                     Bukkit.getLogger().info(e.getPlayer().getName() + ": " + e.getMessage());
                     DiscordUtil.chat(e.getMessage(), e.getPlayer());
