@@ -48,6 +48,8 @@ public class ChatListener implements Listener {
                         CacheManager.getTransaction(e.getPlayer().getUniqueId()).setItem(item);
                         e.getPlayer().sendMessage(Main.c("Economy", "How many would you like to buy? Type 'cancel' to cancel."));
                         CacheManager.getTransaction(e.getPlayer().getUniqueId()).nextStage();
+                        e.setCancelled(true);
+                        return;
                     } else {
                         e.getPlayer().sendMessage(Main.c("Economy", "You have insufficient funds to buy any " + item.getMaterialName() + "s. You need at least &d" + item.getBuyPrice() + " Squad Bucks&r. Please try another item. If you wish to cancel, type 'cancel'."));
                         e.setCancelled(true);
