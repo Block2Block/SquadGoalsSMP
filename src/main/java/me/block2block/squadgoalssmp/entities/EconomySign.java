@@ -42,9 +42,8 @@ public class EconomySign {
         switch (type) {
             case 1:
                 sign.setLine(0, Main.c(null, "&5&l&nBUY"));
-                sign.setLine(1, Main.c(null, item.getMaterialName()));
-                sign.setLine(2, Main.c(null, item.getBuyPrice() + " per item"));
-                sign.setLine(3, Main.c(null, "Click to buy!"));
+                sign.setLine(1, Main.c(null, "Click here to"));
+                sign.setLine(2, Main.c(null, "buy items!"));
                 break;
             case 2:
                 sign.setLine(0, Main.c(null, "&5&l&nSELL"));

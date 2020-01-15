@@ -32,12 +32,8 @@ public class SignClickListener implements Listener {
                     Player p = e.getPlayer();
                     switch (economySign.getType()) {
                         case 1:
-                            if (CacheManager.getProfile(p.getUniqueId()).getBalance() >= economySign.getItem().getBuyPrice()) {
-                                CacheManager.addTransaction(p.getUniqueId(), new Transaction(economySign.getType(), economySign.getItem(), p));
-                                p.sendMessage(Main.c("Economy", "How many would you like to buy? Type 'cancel' to cancel."));
-                            } else {
-                                p.sendMessage(Main.c("Economy", "You have insufficient funds to buy any " + economySign.getItem().getMaterialName() + "s. You need at least &d" + economySign.getItem().getBuyPrice() + " Squad Bucks&r."));
-                            }
+                            CacheManager.addTransaction(p.getUniqueId(), new Transaction(economySign.getType(), null, p));
+                            p.sendMessage(Main.c("Economy", "What item would you like to buy? Please use the Spigot API formatting. If you do not know this please Google 'Material Spigot API' and use the first link."));
                             break;
                         case 2:
                             Inventory inv = Bukkit.createInventory(null, 54, Main.c(null, "&d&lPlease put any items you wish to sell here!"));
