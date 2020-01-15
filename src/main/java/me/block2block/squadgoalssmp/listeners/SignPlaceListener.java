@@ -19,12 +19,7 @@ public class SignPlaceListener implements Listener {
             if (e.getLines()[0].equals("[Buy]") || e.getLines()[0].equals("[Sell]")) {
                 e.setCancelled(true);
                 Sign sign = (Sign) e.getBlock().getState();
-                Material material = Material.matchMaterial(e.getLines()[1]);
-                if (material == null && !e.getLines()[0].equals("[Sell]")) {
-                    sign.setLine(0, Main.c(null, "&4&lInvalid"));
-                    sign.setLine(1, Main.c(null, "&4&lMaterial"));
-                    sign.update(true);
-                } else if (material == null) {
+                if (e.getLines()[0].equals("[Sell]")) {
                     EconomySign economySign = new EconomySign(e.getBlock().getLocation(), null, 2);
                     CacheManager.addSign(economySign, e.getBlock().getLocation());
                     economySign.update();
@@ -35,23 +30,16 @@ public class SignPlaceListener implements Listener {
                         }
                     }.runTaskAsynchronously(Main.getInstance());
                 } else {
-                    if (CacheManager.getItems().containsKey(material)) {
                         int type = ((e.getLines()[0].equals("[Buy]")) ? 1 : 2);
-                        EconomyItem item = CacheManager.getItems().get(material);
-                        EconomySign economySign = new EconomySign(e.getBlock().getLocation(), item, type);
+                        EconomySign economySign = new EconomySign(e.getBlock().getLocation(), null, type);
                         economySign.update();
                         CacheManager.addSign(economySign, e.getBlock().getLocation());
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                Main.getDbManager().addSign(e.getBlock().getLocation(), type, material);
+                                Main.getDbManager().addSign(e.getBlock().getLocation(), type, null);
                             }
                         }.runTaskAsynchronously(Main.getInstance());
-                    } else {
-                        sign.setLine(0, Main.c(null, "&4&lInvalid"));
-                        sign.setLine(1, Main.c(null, "&4&lMaterial"));
-                        sign.update(true);
-                    }
                 }
 
             }
