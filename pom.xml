@@ -74,6 +74,17 @@
         </repository>
     </repositories>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-dv8fromtheworld-maven</id>
+            <name>bintray-plugins</name>
+            <url>https://dl.bintray.com/dv8fromtheworld/maven</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
