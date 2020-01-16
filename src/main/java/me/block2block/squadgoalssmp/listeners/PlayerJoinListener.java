@@ -3,6 +3,7 @@ package me.block2block.squadgoalssmp.listeners;
 import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.PlayerProfile;
+import me.block2block.squadgoalssmp.utils.DiscordUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -59,6 +60,8 @@ public class PlayerJoinListener implements Listener {
                             "Do &d/team help&r for more info!"));
         }
 
+        DiscordUtil.join(e.getPlayer());
+
     }
 
     @EventHandler
@@ -79,6 +82,8 @@ public class PlayerJoinListener implements Listener {
         }
         CacheManager.getTeleports().remove(e.getPlayer());
         CacheManager.getInvites().remove(e.getPlayer().getUniqueId());
+
+        DiscordUtil.leave(e.getPlayer());
     }
 
     @EventHandler
