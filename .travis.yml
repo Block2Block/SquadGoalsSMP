@@ -1,7 +1,7 @@
 langauge: java
 install: skip
 script:
-  - mvn clean package assembly:single
+  - mvn clean package
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
