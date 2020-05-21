@@ -38,39 +38,49 @@ public class UUIDFetcher {
      */
     public static UUID getUUID(String playername) {
 
-        String output = callURL("https://api.mojang.com/users/profiles/minecraft/" + playername);
+        try {
+            String output = callURL("https://api.mojang.com/users/profiles/minecraft/" + playername);
 
-        StringBuilder result = new StringBuilder();
+            StringBuilder result = new StringBuilder();
 
-        readData(output, result);
-
-        String u = result.toString();
-
-        String uuid = "";
-
-        for (int i = 0; i <= 31; i++) {
-            uuid = uuid + u.charAt(i);
-            if (i == 7 || i == 11 || i == 15 || i == 19) {
-                uuid = uuid + "-";
+            readData(output, result, playername);
+            if (result.toString().equals("")) {
+                return null;
             }
-        }
 
-        return UUID.fromString(uuid);
+            String u = result.toString();
+            String uuid = "";
+
+            for (int i = 0; i <= 31; i++) {
+                uuid = uuid + u.charAt(i);
+                if (i == 7 || i == 11 || i == 15 || i == 19) {
+                    uuid = uuid + "-";
+                }
+            }
+
+            return UUID.fromString(uuid);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    private static void readData(String toRead, StringBuilder result) {
-        int i = 7;
+    private static void readData(String toRead, StringBuilder result, String playerName) {
+        try {
+            toRead = toRead.replace(playerName, "");
+            int i = 17;
 
-        while (i < 200) {
-            if (!String.valueOf(toRead.charAt(i)).equalsIgnoreCase("\"")) {
+            while (i < 200) {
+                if (!String.valueOf(toRead.charAt(i)).equalsIgnoreCase("\"")) {
 
-                result.append(String.valueOf(toRead.charAt(i)));
+                    result.append(String.valueOf(toRead.charAt(i)));
 
-            } else {
-                break;
+                } else {
+                    break;
+                }
+
+                i++;
             }
-
-            i++;
+        } catch (Exception ignored) {
         }
     }
 
@@ -79,7 +89,7 @@ public class UUIDFetcher {
         URLConnection urlConn = null;
         InputStreamReader in = null;
         try {
-            URL url = new URL(URL);
+            java.net.URL url = new URL(URL);
             urlConn = url.openConnection();
 
             if (urlConn != null) urlConn.setReadTimeout(60 * 1000);
