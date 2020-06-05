@@ -29,7 +29,7 @@ public class NameFetcher {
 
             if ((String.valueOf(output.charAt(i)).equalsIgnoreCase("n")) && (String.valueOf(output.charAt(i + 1)).equalsIgnoreCase("a")) && (String.valueOf(output.charAt(i + 2)).equalsIgnoreCase("m")) && (String.valueOf(output.charAt(i + 3)).equalsIgnoreCase("e"))) {
 
-                int k = i + 7;
+                int k = i + 9;
 
                 while (k < 100) {
 
