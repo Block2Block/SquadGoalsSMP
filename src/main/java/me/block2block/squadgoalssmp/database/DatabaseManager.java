@@ -9,9 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class DatabaseManager {
 
@@ -53,6 +51,9 @@ public class DatabaseManager {
             set = statement.execute();
 
             statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS teams ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `leader` TEXT NOT NULL, `members` TEXT NOT NULL, `prefix` TEXT NOT NULL, `color` TEXT NOT NULL, `bank` BIGINT NOT NULL, `homeset` BOOLEAN NOT NULL DEFAULT FALSE,  `x` INTEGER NOT NULL, `y` INTEGER NOT NULL, `z` INTEGER NOT NULL)");
+            set = statement.execute();
+
+            statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS homes (`uuid` TEXT NOT NULL, `name` TEXT NOT NULL, `x` INT NOT NULL, `y` INT NOT NULL, `z` INT NOT NULL, `pitch` FLOAT NOT NULL, `yaw` FLOAT NOT NULL, `world` TEXT NOT NULL)");
             set = statement.execute();
 
             return true;
@@ -432,6 +433,51 @@ public class DatabaseManager {
             set = statement.execute();
         } catch (SQLException e) {
 
+        }
+    }
+
+    public void setPlayerHome(UUID uuid, String name, Location location) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO homes VALUES (?, ?, ?, ?, ?, ? ,?, ?)");
+            statement.setString(1, uuid.toString());
+            statement.setString(2, name);
+            statement.setInt(3, location.getBlockX());
+            statement.setInt(4, location.getBlockY());
+            statement.setInt(5, location.getBlockZ());
+            statement.setFloat(6, location.getPitch());
+            statement.setFloat(7, location.getYaw());
+            statement.setString(8, location.getWorld().getName());
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteHome(UUID uuid, String name) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM homes WHERE uuid = ? AND name = ?");
+            statement.setString(1, uuid.toString());
+            statement.setString(2, name);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Map<String, Location> getPlayerHomes(UUID uuid) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM homes WHERE uuid = ?");
+            statement.setString(1, uuid.toString());
+            ResultSet set = statement.executeQuery();
+            Map<String, Location> homes = new HashMap<>();
+            while (set.next()) {
+                homes.put(set.getString(2), new Location(Bukkit.getWorld(set.getString(8)), set.getInt(3), set.getInt(4), set.getInt(5), set.getFloat(7), set.getFloat(6)));
+            }
+            return homes;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new HashMap<>();
         }
     }
 

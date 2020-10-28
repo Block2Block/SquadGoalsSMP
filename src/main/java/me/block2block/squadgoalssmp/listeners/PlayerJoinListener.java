@@ -3,6 +3,7 @@ package me.block2block.squadgoalssmp.listeners;
 import me.block2block.squadgoalssmp.CacheManager;
 import me.block2block.squadgoalssmp.Main;
 import me.block2block.squadgoalssmp.entities.PlayerProfile;
+import me.block2block.squadgoalssmp.entities.TPARequest;
 import me.block2block.squadgoalssmp.utils.DiscordUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,20 +49,17 @@ public class PlayerJoinListener implements Listener {
 
         CacheManager.addProfile(e.getPlayer().getUniqueId(), new PlayerProfile(e.getPlayer()));
 
-        e.setJoinMessage(Main.c(null,"&d&l" + e.getPlayer().getName() + " joined the Squad."));
+        e.setJoinMessage(Main.c(null,"&d&l" + e.getPlayer().getName() + " joined the server."));
         if (!e.getPlayer().hasPlayedBefore()) {
-            e.getPlayer().sendMessage(Main.c("Squad Goals SMP",
-                    "&d&l&nWelcome to the Squad Goals SMP S3!\n&rWe hope you enjoy your time here! The rules " +
-                            "are relatively simple. Vaults are off limits when " +
-                            "not in a purge, no abusing/exploiting commands, try " +
+            e.getPlayer().sendMessage(Main.c("Coelum SMP",
+                    "&d&l&nWelcome to the Coelum SMP!\n&rWe hope you enjoy your time here! The rules " +
+                            "are relatively simple. No abusing/exploiting commands, try " +
                             "not to break the server, pranks are fine but total base " +
-                            "destroying is a no go, stealing is a big no go (unless it is a purge), and have fun! \n" +
+                            "destroying is a no go, stealing is a big no go, if you kill someone return their items in a chest at the location you killed them and have fun! \n" +
                             "If you are playing with friends, we recommend creating a team! " +
                             "Do &d/team help&r for more info!"));
         }
-
         DiscordUtil.join(e.getPlayer());
-
     }
 
     @EventHandler
@@ -69,7 +67,7 @@ public class PlayerJoinListener implements Listener {
         if (CacheManager.getProfile(e.getPlayer().getUniqueId()) == null) {
             return;
         }
-        e.setQuitMessage(Main.c(null,"&d&l" + e.getPlayer().getName() + " left the Squad."));
+        e.setQuitMessage(Main.c(null,"&d&l" + e.getPlayer().getName() + " left the server."));
         if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam() != null) {
             if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().isOffline()) {
                 CacheManager.getTeams().remove(CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getId());
@@ -82,6 +80,12 @@ public class PlayerJoinListener implements Listener {
         }
         CacheManager.getTeleports().remove(e.getPlayer());
         CacheManager.getInvites().remove(e.getPlayer().getUniqueId());
+
+        for (TPARequest request : CacheManager.getTpaRequests()) {
+            if (request.getRequester().equals(e.getPlayer()) || request.getRequestee().equals(e.getPlayer())) {
+                request.left();
+            }
+        }
 
         DiscordUtil.leave(e.getPlayer());
     }
