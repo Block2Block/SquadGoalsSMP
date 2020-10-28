@@ -46,7 +46,7 @@ public class ChatListener implements Listener {
 
                     if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getBalance() >= item.getBuyPrice()) {
                         CacheManager.getTransaction(e.getPlayer().getUniqueId()).setItem(item);
-                        e.getPlayer().sendMessage(Main.c("Economy", "How many would you like to buy? They buy at &d" + item.getBuyPrice() + " Squad Bucks &rper item. Type 'cancel' to cancel."));
+                        e.getPlayer().sendMessage(Main.c("Economy", "How many would you like to buy? They buy at &d" + item.getBuyPrice() + " Coins &rper item. Type 'cancel' to cancel."));
                         CacheManager.getTransaction(e.getPlayer().getUniqueId()).nextStage();
                         e.setCancelled(true);
                         return;
@@ -80,7 +80,7 @@ public class ChatListener implements Listener {
                     Transaction transaction = CacheManager.getTransaction(e.getPlayer().getUniqueId());
 
                     if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getBalance() < (transaction.getItem().getBuyPrice() * amount)) {
-                        e.getPlayer().sendMessage(Main.c("Economy", "You have insufficient funds to buy" + amount + " " + transaction.getItem().getMaterialName() + "s. You need at least &d" + (transaction.getItem().getBuyPrice() * amount) + " Squad Bucks&r. Please try again."));
+                        e.getPlayer().sendMessage(Main.c("Economy", "You have insufficient funds to buy" + amount + " " + transaction.getItem().getMaterialName() + "s. You need at least &d" + (transaction.getItem().getBuyPrice() * amount) + " Coins&r. Please try again."));
                         e.setCancelled(true);
                         return;
                     }
@@ -114,27 +114,23 @@ public class ChatListener implements Listener {
         if (CacheManager.isTeamChat(e.getPlayer())) {
             CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().chat(e.getPlayer(), e.getMessage());
             Bukkit.getLogger().info("[Team Chat] " + ((e.getPlayer().isOp())?"&d&l✦ ":"") + e.getPlayer().getName() + ": " + e.getMessage());
-            DiscordUtil.teamChat(e.getMessage(), e.getPlayer());
         } else {
             if (CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam() == null) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     p.sendMessage(Main.c(null,  ((e.getPlayer().isOp())?"&d&l✦ ":"") + "&7" + e.getPlayer().getName() + "&r: " + e.getMessage()));
                 }
                 Bukkit.getLogger().info(e.getPlayer().getName() + ": " + e.getMessage());
-                DiscordUtil.chat(e.getMessage(), e.getPlayer());
             } else {
                 if (ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&',CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix())).equalsIgnoreCase("")) {
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.sendMessage(Main.c(null,  ((e.getPlayer().isOp())?"&d&l✦ ":"") + "&" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
                     }
                     Bukkit.getLogger().info(e.getPlayer().getName() + ": " + e.getMessage());
-                    DiscordUtil.chat(e.getMessage(), e.getPlayer());
                 } else {
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.sendMessage(Main.c(null, ((e.getPlayer().isOp())?"&d&l✦ ":"") + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getPrefix() + " &" + CacheManager.getProfile(e.getPlayer().getUniqueId()).getTeam().getColor().getChar() + e.getPlayer().getName() + "&r: " + e.getMessage()));
                     }
                     Bukkit.getLogger().info(e.getPlayer().getName() + ": " + e.getMessage());
-                    DiscordUtil.chat(e.getMessage(), e.getPlayer());
                 }
             }
         }

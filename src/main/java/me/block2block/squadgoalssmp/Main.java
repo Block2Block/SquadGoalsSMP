@@ -89,7 +89,7 @@ public class Main extends JavaPlugin {
         Bukkit.setWhitelist(false);
 
         try {
-            jda = new JDABuilder(AccountType.BOT).setToken("NDk4OTE1NDAwMDAwNDcxMDYw.Xdwl3w.kvzy3oeVe9FAjrCNw2XPbMbDmC0").setActivity(Activity.playing("Squad Goals SMP")).build();
+            jda = new JDABuilder(AccountType.BOT).setToken("NzY4MDkwOTgxODc0MDA4MDg1.X47aeA.Z55N2I9B5YBd8nSWcbwDXh0J0tw").setActivity(Activity.playing("Coelum SMP")).build();
             jda.addEventListener(new DiscordMessageEvent());
             dbManager = new DatabaseManager();
             dbManager.setup();
@@ -108,6 +108,10 @@ public class Main extends JavaPlugin {
         getCommand("trial").setExecutor(new CommandTrial());
         getCommand("trial").setTabCompleter(new TabCompleteTrial());
         getCommand("whitelist").setExecutor(new CommandWhitelist());
+        getCommand("home").setExecutor(new CommandHome());
+        getCommand("tpa").setExecutor(new CommandTPA());
+        getCommand("tpaccept").setExecutor(new CommandTPAccept());
+        getCommand("tpdeny").setExecutor(new CommandTPDeny());
 
         if (!CacheManager.isPurge()) {
             //Copying scoreboard to a new dummy one, so it cannot be modified.

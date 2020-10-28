@@ -44,13 +44,13 @@ public class CommandPay implements CommandExecutor {
                             if (Bukkit.getOfflinePlayer(uuid).hasPlayedBefore()) {
                                 if (Bukkit.getOfflinePlayer(uuid).isOnline()) {
                                     CacheManager.getProfile(uuid).addBalance(amount);
-                                    Bukkit.getPlayer(uuid).sendMessage(Main.c("Economy", "You have recieved &d$" + amount + "&r from &d" + p.getName() + "&r."));
+                                    Bukkit.getPlayer(uuid).sendMessage(Main.c("Economy", "You have recieved &d" + amount + " coins&r from &d" + p.getName() + "&r."));
                                     CacheManager.getProfile(p.getUniqueId()).removeBalance(amount);
-                                    p.sendMessage(Main.c("Economy", "You sent &d$" + amount + "&r to &d" + args[0] + "&r."));
+                                    p.sendMessage(Main.c("Economy", "You sent &d" + amount + " coins&r to &d" + args[0] + "&r."));
                                 } else {
                                     Main.getDbManager().addBalance(uuid, amount);
                                     CacheManager.getProfile(p.getUniqueId()).removeBalance(amount);
-                                    p.sendMessage(Main.c("Economy", "You sent &d$" + amount + "&r to &d" + args[0] + "&r."));
+                                    p.sendMessage(Main.c("Economy", "You sent &d" + amount + " coins&r to &d" + args[0] + "&r."));
                                 }
                             } else {
                                 p.sendMessage(Main.c("Economy", "That player hasn't joined the server yet, so you cannot give money to them."));

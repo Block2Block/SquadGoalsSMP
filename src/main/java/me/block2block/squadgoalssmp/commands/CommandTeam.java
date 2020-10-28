@@ -152,7 +152,7 @@ public class CommandTeam implements CommandExecutor {
                                     return true;
                                 }
                                 if (!CacheManager.getTeleports().containsKey(p)) {
-                                    p.sendMessage(Main.c("Teams", "Please do not move. You will be teleported in &d10 seconds&r."));
+                                    p.sendMessage(Main.c("Teams", "Please do not move. You will be teleported in &d5 seconds&r."));
                                     CacheManager.getTeleports().put(p, new BukkitRunnable() {
                                         @Override
                                         public void run() {
@@ -160,7 +160,7 @@ public class CommandTeam implements CommandExecutor {
                                                 p.sendMessage(Main.c("Teams", "You have been teleported to your teams home."));
                                                 CacheManager.getTeleports().remove(p);
                                         }
-                                    }.runTaskLater(Main.getInstance(), 200));
+                                    }.runTaskLater(Main.getInstance(), 100));
                                     DiscordUtil.commandUse("/team home", p);
                                 } else {
                                     p.sendMessage(Main.c("Teams", "You already have teleportation pending."));

@@ -79,7 +79,7 @@ public class InvCloseListener implements Listener {
                 EconomyItem ic = CacheManager.getItems().get(m);
                 message.append("&d" + ic.getMaterialName() + "&r - &d" + items.get(m) + "&r * &d" + ic.getSellPrice() + " Squad Bucks&r.\n");
             }
-            message.append("Total Items: &d" + totalItems + "&r - Total Value: &d" + total + " Squad Bucks&r.");
+            message.append("Total Items: &d" + totalItems + "&r - Total Value: &d" + total + " Coins&r.");
             p.sendMessage(Main.c("Economy", message.toString()));
             CacheManager.getProfile(p.getUniqueId()).addBalance(total);
         }

@@ -23,6 +23,7 @@ public class CacheManager {
     private static List<Player> teamChat = new ArrayList<>();
     private static Player trial;
     private static Map<Player, Boolean> votes;
+    private static List<TPARequest> tpaRequests = new ArrayList<>();
 
     public static boolean isPurge() {
         return (purge != null);
@@ -198,5 +199,9 @@ public class CacheManager {
     public static void endVote() {
         votes = null;
         trial = null;
+    }
+
+    public static List<TPARequest> getTpaRequests() {
+        return tpaRequests;
     }
 }

@@ -15,7 +15,7 @@ public class MoveListener implements Listener {
         }
         if (!e.getFrom().getBlock().equals(e.getTo().getBlock())) {
             if (CacheManager.getTeleports().containsKey(e.getPlayer())) {
-                e.getPlayer().sendMessage(Main.c("Teams","You moved! Teleportation cancelled."));
+                e.getPlayer().sendMessage(Main.c("Teleport Manager","You moved! Teleportation cancelled."));
                 CacheManager.getTeleports().get(e.getPlayer()).cancel();
                 CacheManager.getTeleports().remove(e.getPlayer());
             }

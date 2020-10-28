@@ -12,14 +12,14 @@ commands:
     description: Purge related commands! Server Admin Only.
     usage: Don't use it.
   pay:
-    aliases: [charity,donate,giveoutmoneyz,idontwantthismoneyanymore,sharethewealth,ineedtohidethismoneyfromtheirs,ineedtohidethismoneyfromhmrc,takemyprecioushardearnedmoney,moneyodisapearo]
+    aliases: [charity,donate,giveoutmoneyz,idontwantthismoneyanymore,sharethewealth,fucktheirs,fuckhmrc,takemyprecioushardearnedmoney,moneyodisapearo,gimmeurfuckinmoneydundun]
     description: Pay a user money.
     usage: /pay [user] [amount]
   updateecon:
     description: Updates Economy Values. Server Admin Only.
     usage: /updateecon
   team:
-    aliases: [teams]
+    aliases: [teams, fuckbuddies]
     description: Team related commands and subcommands.
     usage: /team [command arguments]
   trial:
@@ -28,3 +28,15 @@ commands:
   whitelist:
     description: Whitelist players
     usage: /whitelist [command arguments]
+  tpa:
+    description: Teleport requests.
+    usage: /tpa [user]
+  tpaccept:
+    description: Accept teleport requests.
+    usage: /tpaccept
+  tpdeny:
+    description: Deny teleport request.
+    usage: /tpdeny
+  home:
+    description: Home related commands.
+    usage: /home [command arguments]

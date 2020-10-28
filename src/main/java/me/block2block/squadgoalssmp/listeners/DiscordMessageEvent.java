@@ -17,8 +17,8 @@ public class DiscordMessageEvent extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
         if (e.isFromType(ChannelType.TEXT)) {
-            if (e.getGuild().getId().equals("476121430786834432")) {
-                if (e.getChannel().getId().equals("501300319347539973")) {
+            if (e.getGuild().getId().equals("767817191104970772")) {
+                if (e.getChannel().getId().equals("768090834624053268")) {
                     if (e.getMessage().getContentStripped().startsWith("!whitelist")) {
                         if (e.getMessage().getContentStripped().split(" ").length == 2) {
                             String[] args = e.getMessage().getContentStripped().split(" ");
@@ -48,12 +48,6 @@ public class DiscordMessageEvent extends ListenerAdapter {
                             }
                         } else {
                             e.getMessage().getChannel().sendMessage("Invalid syntax. Correct syntax: **!whitelist [username]**").queue();
-                        }
-                    }
-                } else if (e.getChannel().getId().equals("667161928157757458")) {
-                    if (!e.getAuthor().getId().equalsIgnoreCase("498915400000471060")) {
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            p.sendMessage(Main.c( null, "&3[Discord] &r" + e.getAuthor().getName() + ": " + e.getMessage().getContentRaw()));
                         }
                     }
                 }
